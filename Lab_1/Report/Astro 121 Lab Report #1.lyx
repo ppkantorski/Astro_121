@@ -1,0 +1,1771 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Analog Lab: Impedance, Filters, Amplifiers, and Noise
+\end_layout
+
+\begin_layout Author
+By Patrick Kantorski
+\end_layout
+
+\begin_layout Date
+February 8, 2014
+\end_layout
+
+\begin_layout Abstract
+This report was written for a radio astronomy undergraduate course at UC
+ Berkeley.
+ Through combining a FM demodulator with an amplifier and speaker, FM radio
+ signals can be converted into sound.
+ Circuits constructed in this lab were built around demodulating a 1.045
+ MHz FM radio transmission.
+ Coding was also done in the programming language Python to examine Johnson-Nyqu
+ist noise and demonstrate the Central Limit Theorem.
+\end_layout
+
+\begin_layout Section*
+I
+\begin_inset space \enskip{}
+\end_inset
+
+Introduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \hspace{}
+\length 1.55em
+\end_inset
+
+An analog signal is any continuous signal in which the time variance is
+ characterized by some other quantity that varies with time.
+ In this lab, circuits made from basic circuitry components were constructed,
+ analyzed, and implemented on analog signals.
+ By using resistors, capacitors, and inductors, my partners and I assembled
+ voltage dividers, high-pass filters, low-pass filters, and even bandpass
+ filters in order to produce a functioning FM radio receiver.
+ Additionally, concepts such as signal reflection, signal transmission,
+ termination, impedance matching of transmission lines, Johnson-Nyquist
+ noise, and the Central Limit Theorem were also examined as the lab progressed.
+\end_layout
+
+\begin_layout Standard
+Signal reflection occurs when the impedance of a transmission line is mismatched.
+ What signal reflection literally is is the reflection of a signal that
+ is being passed through a transmission line.
+ When reflection occurs, the transmission of the signal is reduced and the
+ reflected signal reverts back up the transmission line.
+ To fix this problem, all that needs to be done is to properly terminate
+ the transmission line.
+ Proper termination is done by matching the impedance between connections.
+ Additionally, to minimize loading and achieve more accurate measurements,
+ scope probes with attenuation factors are used.
+\end_layout
+
+\begin_layout Standard
+Johnson-Nyquist noise is the thermal noise produced by the random collisions
+ of electrons within a resistor.
+ The random thermal motion of the electrons produces a current that has
+ zero mean but a non-zero variance.
+ The current also sets up a small fluctuating voltage across the resistor.
+ Many random processes or factors, including the random motion of the electrons
+ in Johnson-Nyquist noise, converge to Gaussian distributions.
+ When adding together random numbers, the variance of the sum is the sum
+ of the variances of the numbers.
+ These two concepts are at the heart of the Central Limit Theorem and were
+ also examined in this lab.
+\end_layout
+
+\begin_layout Section*
+II
+\begin_inset space \enskip{}
+\end_inset
+
+Materials & Methods
+\end_layout
+
+\begin_layout Subsection*
+A
+\begin_inset space \enskip{}
+\end_inset
+
+FM Radio Receiver
+\end_layout
+
+\begin_layout Itemize
+An FM radio receiver, or FM demodulator, functions by converting FM radio
+ signals into modulated carrier wave signals.
+ The term 
+\begin_inset Quotes eld
+\end_inset
+
+demodulation
+\begin_inset Quotes erd
+\end_inset
+
+ refers to the process of extracting a signal carrying information from
+ a modulated carrier wave.
+ The demodulator takes the digital data creates the analog signal.
+ The created analog signal also passes through a low-pass filter for smoothing.
+\end_layout
+
+\begin_layout Subsection*
+B
+\begin_inset space \enskip{}
+\end_inset
+
+Amplifier for FM Signal
+\end_layout
+
+\begin_layout Itemize
+In order to increase the volume of the FM signal after being demodulated,
+ an amplifier was constructed based around an NPN transistor.
+\end_layout
+
+\begin_layout Itemize
+To test the amplifier and check if it functioned with the appropriate gain,
+ the function generator and oscilloscope were used.
+\end_layout
+
+\begin_layout Itemize
+Modifications were made after construction to increase the amplifier's gain.
+\end_layout
+
+\begin_layout Subsection*
+C
+\begin_inset space \enskip{}
+\end_inset
+
+Johnson-Nyquist Noise and The Central Limit Theorem
+\end_layout
+
+\begin_layout Itemize
+As mentioned in the introduction, Johnson-Nyquist noise is the thermal noise
+ produced by the random motion of electrons within a resistor.
+ 
+\end_layout
+
+\begin_layout Itemize
+The noise factor is defined as the ratio of the output noise power of a
+ device to the portion of the power attributed to thermal noise at the input
+ at the standard noise temperature.
+ The noise factor could also be thought of as the ratio of actual output
+ noise to that which would remain if the device itself did not introduce
+ noise.
+\end_layout
+
+\begin_layout Itemize
+The central limit was also demonstrated in the constructed python program
+ 
+\begin_inset Quotes eld
+\end_inset
+
+central_limit.py.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+D
+\begin_inset space \enskip{}
+\end_inset
+
+Astronomy Laboratory
+\end_layout
+
+\begin_layout Itemize
+Data collection for this experiment was taken from UC Berkeley's undergraduate
+ astronomy laboratory.
+\end_layout
+
+\begin_layout Itemize
+Equipment used includes a Tektronix TDS 350 Oscilloscope, a Stanford Research
+ System Model DS345 30MHz function generator, a CSCI3003XIII +15V power
+ supply, HP 8657A Signal Generator with mixer, 50Ω coaxial cables with adapters,
+ a scope probe, and multiple circuitry components ranging from resistors
+ to NPN BJT transistors.
+\end_layout
+
+\begin_layout Itemize
+Computer programming was conducted through Python.
+\end_layout
+
+\begin_layout Section*
+III
+\begin_inset space \enskip{}
+\end_inset
+
+Observations & Data Analysis
+\end_layout
+
+\begin_layout Subsection*
+A
+\begin_inset space \enskip{}
+\end_inset
+
+FM Radio Receiver
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/FM Demodulator.png
+	scale 50
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+FM signal demodulation circuit connected to speaker.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+FM Signal Transmission
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Using a HP 8657A Signal Generator, a FM radio, and a mixer, FM radio station
+ signals were transmitted to the FM demodulation circuit (see Figure 1)
+ at a frequency of about 1.045 MHz.
+\end_layout
+
+\begin_layout Enumerate
+The FM signal was modulated by the signal generator to 1.045 MHz intentionally.
+ It should be noted that the circuit design was constructed to demodulate
+ this frequency from the available components in the lab.
+\end_layout
+
+\begin_layout Enumerate
+The load impedance of the circuit was about 50Ω.
+ Additionally, a 50Ω terminator was used to properly terminate the line.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+RLC Bandpass Filter
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The first three components on Figure 1 work together as a RLC bandpass filter.
+ Bandpass filters work by passing frequencies within a certain range and
+ attenuating frequencies outside that range.
+\end_layout
+
+\begin_layout Enumerate
+To isolate the 1.045 MHz FM signal, the bandpass (see Figure 2) was constructed
+ based on the following equation.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $f_{0}=\frac{1}{2\pi\sqrt{LC}}$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $Q=2\pi f_{0}RC=\frac{f_{0}}{\triangle f_{3dB}}$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(3) 
+\begin_inset Formula $\omega_{0}=2\pi f_{0}$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(4) 
+\begin_inset Formula $G=\frac{V_{out}}{V_{in}}=\left(\frac{j\omega L}{1-\omega^{2}LC}\right)/\left(R+\frac{j\omega L}{1-\omega^{2}LC}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $f_{0}$
+\end_inset
+
+ is the bandpass's center frequency, 
+\begin_inset Formula $\omega_{0}$
+\end_inset
+
+ is the angular frequency representation of 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+, and 
+\begin_inset Formula $Q$
+\end_inset
+
+ adjusts the filter's roll-off.
+\end_layout
+
+\begin_layout Enumerate
+Using the values shown on Figure 1, 
+\begin_inset Formula $f_{0}\thickapprox1.073\times10^{6}Hz$
+\end_inset
+
+, 
+\begin_inset Formula $Q\thickapprox4.895$
+\end_inset
+
+, and 
+\begin_inset Formula $\omega_{0}\approx6.741\times10^{6}Hz$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/bandpass.png
+	scale 65
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+RLC bandpass response of the final filter plotted as a function of frequency.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The LC circuit in the receiver converts frequency modulated signals into
+ amplitude modulated signals.
+ The equation below represents the output impedance as a function of angular
+ frequency 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\omega_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $Z_{L}=j\omega L$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $Z_{C}=\frac{1}{j\omega C}$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(3) 
+\begin_inset Formula $Z=\frac{-j\omega L}{\omega^{2}LC-1}$
+\end_inset
+
+ (see Figure 3).
+\end_layout
+
+\begin_layout Enumerate
+As shown in Figure 2, the output impedance of the LC circuit approaches
+ positive infinity at the angular frequency 
+\begin_inset Formula $\omega_{0}\approx6.741\times10^{6}Hz$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+This allows for frequencies within the range of 
+\begin_inset Formula $\omega_{0}$
+\end_inset
+
+ to be passed by the LC circuit to the next part of the FM demodulator.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/LC Output Impedance.png
+	scale 65
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+LC circuit output impedance 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $Z$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ as a function of 
+\begin_inset Formula $\omega$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Blocking Capacitor
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The capacitor placed after the RLC bandpass filter removes any DC bias or
+ DC offset from the signal.
+\end_layout
+
+\begin_layout Enumerate
+DC bias is the mean value of the waveform.
+ This means that if the mean amplitude is zero, there is no DC offset.
+\end_layout
+
+\begin_layout Enumerate
+This capacitor in combination with the resistor going to ground can also
+ be viewed as a high-pass filter.
+ High-pass filters only allow frequencies above 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $f_{cut}$
+\end_inset
+
+ to pass through.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $f_{cut}=\frac{1}{2\pi RC}$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $R=\frac{R_{1}R_{2}}{R_{1}+R_{2}}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+Using the values shown on Figure 1, 
+\begin_inset Formula $f_{cut}\approx8.611\times10^{2}Hz$
+\end_inset
+
+ and 
+\begin_inset Formula $R\approx861\Omega$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Because the cutoff frequency for the high-pass filter is extremely small
+ and was placed after the RLC bandpass, its effect was negligible.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Voltage Divider
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+A voltage divider was placed at the location of the +5V power supply in
+ order to deliver about +0.6V to activate the diode.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $V=IR$
+\end_inset
+
+ ,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $V_{out}=\left(\frac{R_{2}}{R_{1}+R_{2}}\right)V_{in}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Using the voltage divider equation (2), 
+\begin_inset Formula $V_{out}\approx0.694V$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Diode & Low-Pass Filter
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Diodes function by limiting current flow to one direction.
+ This effectively rectifies signals below 0V passed through the diode.
+\end_layout
+
+\begin_layout Enumerate
+Additionally, adding a DC offset to the signal via voltage divider allows
+ the diode to function properly.
+\end_layout
+
+\begin_layout Enumerate
+After the signal passes through the diode, a low-pass filter is then used
+ to filter out the carrier frequency.
+ Like high-pass filters, low-pass filters only allow frequencies below 
+\begin_inset Formula $f_{cut}$
+\end_inset
+
+ to pass through.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $f_{cut}=\frac{1}{2\pi RC}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Using the values shown on Figure 1, 
+\begin_inset Formula $f_{cut}\approx1.061\times10^{5}Hz$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Because the capacitor going to ground slowly discharges, the carrier wave
+ signal is filtered out from the rectified output signal.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Blocking Capacitor
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The addition of another blocking capacitor after the diode and low-pass
+ filter removes any DC bias from the carrier wave signal before it reaches
+ the speaker.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Output Speaker
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+After passing through the diode and low-pass filter, the demodulated FM
+ signal can then be heard from the speaker.
+\end_layout
+
+\begin_layout Enumerate
+To make the output volume louder, an amplifier was added between the blocking
+ capacitor and the output speaker.
+\end_layout
+
+\begin_layout Enumerate
+The output impedance of the speaker was labeled to be about 8Ω.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection*
+B
+\begin_inset space \enskip{}
+\end_inset
+
+Amplifier for FM Signal
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/Amplifier.png
+	scale 50
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Common-emmiter amplifier based on an NPN BJT.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Function Generator
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+A wave function generator was used to test the amplifier shown in Figure
+ 4.
+\end_layout
+
+\begin_layout Enumerate
+A 10kHz sine-wave was passed through the amplifier.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Initial Capacitor
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The first capacitor C1 was chosen so that the frequencies of interest were
+ passed by the high-pass filer it forms in combination with the parallel
+ resistance of the base-biasing resistor.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $f=\frac{1}{2\pi RC}$
+\end_inset
+
+,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $R=\frac{R_{1}R_{2}}{R_{1}+R_{2}}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+Using the values shown in Figure 3, 
+\begin_inset Formula $f\approx30.143Hz$
+\end_inset
+
+ and 
+\begin_inset Formula $R\approx7.764\times10^{3}\Omega$
+\end_inset
+
+ .
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Voltage Divider
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The voltage divider formed by R1 and R2 sets the voltage at the base of
+ the NPN BJT.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $V_{out}=\left(\frac{R_{2}}{R_{1}+R_{2}}\right)V_{in}$
+\end_inset
+
+ ,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $V_{E}=V_{B}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+This sets the voltage at the base of the NPN BJT to about 
+\begin_inset Formula $V_{B}\approx1.765V$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+The voltage measured at the base came out to about 1.74V, close to what was
+ expected.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Additionally, the voltage at the base is the same as the voltage at the
+ emitter of the NPN BJT (see Equation 2), making the measured 
+\begin_inset Formula $V_{B}\approx1.74V$
+\end_inset
+
+ .
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+NPN Transistor
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The base-emitter junction of the NPN transistor acts like a diode, restricting
+ current flow in one-direction.
+\end_layout
+
+\begin_layout Enumerate
+Very little current flows into the base unless it is above about 0.6V.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $V_{C}=-V_{B}\left(\frac{R_{C}}{R_{E}}\right)$
+\end_inset
+
+ ,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $V_{BC}=V_{C}-V_{B}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+Following this equation, the voltage at the collector is approximately 
+\begin_inset Formula $V_{C}\approx3.176V$
+\end_inset
+
+ inverted with respect to the 
+\begin_inset Formula $V_{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The measured voltage at the collector of the NPN BJT came out to about 2.94V.
+\end_layout
+
+\begin_layout Enumerate
+This makes the measured voltage across the base to the collector about 
+\begin_inset Formula $V_{BC}\approx1.411V.$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Because the collector is at a higher voltage than the base, the collector-emitte
+r current should be about 100 times the base current.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Gain Resistors
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The resistor placed at the collector and base of the NPN BJT set the gain,
+ or amplification, of the output signal.
+\end_layout
+
+\begin_layout Enumerate
+The gain of the amplifier can be calculated from the equation shown below.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $G=\frac{V_{out}}{V_{in}}=-\frac{R_{C}}{R_{E}}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+Using the values shown on Figure 4 for 
+\begin_inset Formula $R_{C}$
+\end_inset
+
+ and 
+\begin_inset Formula $R_{E},$
+\end_inset
+
+ the gain should have been about 
+\begin_inset Formula $G\approx-1.80$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+After measuring 
+\begin_inset Formula $V_{out}\approx-1.74V$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{in}\approx0.98V$
+\end_inset
+
+, the measured gain was approximatly 
+\begin_inset Formula $G\approx-1.78$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Blocking Capacitor
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Blocking capacitor C2 removes any DC bias from the signal before it is outputted
+ to the oscillosope or speaker.
+\end_layout
+
+\begin_layout Enumerate
+The value of C2 was chosen after testing several capacitors of different
+ values.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Oscilloscope
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The oscilloscope was used to compare the input signal, taken directly from
+ the function generator, to the output signal.
+\end_layout
+
+\begin_layout Enumerate
+After testing the amplifier with the oscilloscope, the gain was improved
+ through the addion of a capacitor in parallel with 
+\begin_inset Formula $R_{E}$
+\end_inset
+
+ (see Figure 5).
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Additionally, a scope probe was used to view the output signal.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Improving the Gain
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/Amplifier2.png
+	scale 50
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Common-emmiter amplifier based on an NPN BJT with improved gain.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+In order to improve the gain of the common-emmiter amplifier, two 100nF
+ capacitors in series were added in parallel to 
+\begin_inset Formula $R_{E}$
+\end_inset
+
+ (see Figure 6).
+\end_layout
+
+\begin_layout Enumerate
+The equations below were used to calculate find the new gain.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Equations: (1) 
+\begin_inset Formula $C_{34}=\frac{C_{3}C_{4}}{C_{3}+C_{4}}$
+\end_inset
+
+ ,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(2) 
+\begin_inset Formula $Z_{RC}=\frac{R}{j\omega RC+1}$
+\end_inset
+
+ ,
+\begin_inset space \hspace{}
+\length 2em
+\end_inset
+
+(3) 
+\begin_inset Formula $G=\frac{V_{out}}{V_{in}}=-\frac{R_{C}}{Z_{RC}}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Enumerate
+After doing the calculations with 
+\begin_inset Formula $f=10kHz$
+\end_inset
+
+ , 
+\begin_inset Formula $C_{34}\approx50nF$
+\end_inset
+
+ and 
+\begin_inset Formula $Z_{RC}\approx262.6\Omega$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+This makes the improved gain 
+\begin_inset Formula $G\approx-10.3$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Furthermore, the measured voltage output and input came out to about 
+\begin_inset Formula $V_{out}\approx808mV$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{in}\approx99mV$
+\end_inset
+
+, making the measured gain approximately 
+\begin_inset Formula $G\approx8.16$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+After improving the gain, the FM demodulator (see Figure 1) was then connected
+ to the amplifier where the function generator was initially placed (see
+ Figure 6).
+\end_layout
+
+\end_deeper
+\begin_layout Subsection*
+C
+\begin_inset space \enskip{}
+\end_inset
+
+Johnson Nyquist Noise and The Central Limit Theorem
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Noise Figure
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The noise figure of a circuit is the measure of degradation of the signal-to-noi
+se ratio caused by components in a radio frequency signal chain.
+ It is a number which defines the performance specifications of a radio
+ receiver.
+\end_layout
+
+\begin_layout Enumerate
+To measure the noise figure of the amplifier constructed (see Figure 5),
+ the following steps can be performed.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+By setting the amplifier to dissipate about 2W into a resistor, the temperature
+ the resistor would reach can be calculated using the Stefan-Boltzmann Law.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Stephan-Boltzmann Law: 
+\begin_inset Formula $P=A\epsilon\sigma T^{4}$
+\end_inset
+
+, where 
+\begin_inset Formula $A$
+\end_inset
+
+ is the surface area, 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is the emissivity (
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\epsilon<1$
+\end_inset
+
+),
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is the Stefan-Boltzmann constant, and 
+\begin_inset Formula $T$
+\end_inset
+
+ is the temperature in kelvin.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Because the temperature the resistor hits when dissipating 2W would be known,
+ the appropriate gain and the amplifier temperature can then be calculated.
+\end_layout
+
+\begin_layout Enumerate
+Error bars can then be used to determine the confidence interval on the
+ measurement of the gain and receiver temperatures.
+\end_layout
+
+\begin_layout Enumerate
+Finally, the amplifier temperature can be use in the Stefan-Boltzmann Law
+ to determine the power out of the amplifier.
+\end_layout
+
+\begin_layout Enumerate
+By comparing the output noise power of the amplifier to the proportion attribute
+d to the thermal noise, the noise figure can then be approximated.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Central Limit Theorem
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/histo.png
+	scale 60
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Histogram showing non-Gaussian random distributions converging to a Gaussian
+ distribution.
+ Sample Size = 5, N = 200, and # of Bins = 15.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The program named 
+\begin_inset Quotes eld
+\end_inset
+
+central_limit.py
+\begin_inset Quotes erd
+\end_inset
+
+ was constructed in Python to demonstrate the Central Limit Theorem.
+\end_layout
+
+\begin_layout Enumerate
+To test how noise outputted by the amplifier integrates down and be sure
+ that there are no systematics present, 
+\begin_inset Quotes eld
+\end_inset
+
+central_limit.py
+\begin_inset Quotes erd
+\end_inset
+
+ can be used.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/allen.png
+	scale 60
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Plot generated from 
+\begin_inset Quotes eld
+\end_inset
+
+central_limit.py
+\begin_inset Quotes erd
+\end_inset
+
+ showing the Allen variance test with N = 200.
+ Standard deviation of the mean of N random samples decreases as 
+\begin_inset Formula $\sqrt{N}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+If a known-good noise source is placed in front of the amplifier and output
+ of the amplifier is digitized, the numbers outputted by 
+\begin_inset Quotes eld
+\end_inset
+
+central_limit.py
+\begin_inset Quotes erd
+\end_inset
+
+ will be generated.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The standard deviation of the mean of N gaussian-random samples decreases
+ as 
+\begin_inset Formula $\sqrt{N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+To characterize samples of an unknown character and shown if they are noise
+ like, the Allen variance test is used (see Figure 7).
+ Performing an Allen variance test shows that the noise from the amplifier
+ behaves as expected.
+\end_layout
+
+\begin_layout Enumerate
+A plot of the standard deviation versus the number of samples averaged along
+ with the slope of the line approached can be seen in Figure 8.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/std.png
+	scale 60
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This graph shows the standard deviation versus the number of samples averaged
+ N at Sample Size = 5.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Section*
+IV
+\begin_inset space \enskip{}
+\end_inset
+
+Interpretation
+\end_layout
+
+\begin_layout Subsection*
+A
+\begin_inset space \enskip{}
+\end_inset
+
+FM Signal Demodulation with Amplification
+\end_layout
+
+\begin_layout Itemize
+The FM signal demodulator with amplification functions well as a basic FM
+ radio receiver and player.
+ Although the target frequency of 1.045 MHz cannot be changed without complete
+ recalculation and design of all of the individual circuit components, the
+ fully constructed circuit (see Figure 9) works well at doing what it is
+ made to do.
+ FM radio signals at a signal frequency of 1.045 MHz are passed into the
+ signal demodulator which then isolates the carrier wave from the FM transmissio
+n.
+ After signal demodulation, the carrier wave is then passed onto the NPN
+ transistor based amplifier.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_1/Pictures/final circuit.png
+	scale 50
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+FM signal demodulator combined with the improved gain common-emmiter amplifier.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The amplifier takes the carrier wave audio signal and amplifies it with
+ a gain of about 8.16.
+ This makes the audio signal louder and more distinguishable.
+ Finally, after passing through the amplifier, the sound is then transmitted
+ through the output speaker.
+ Amplifiers can be used in many different ways and in many different scenarios.
+ The type of amplifier examined in this lab is called a voltage amplifier
+ which, as the name states, amplifies input voltages.
+ Besides amplifying audio signals, voltage amplifiers can also be used to
+ examine the effects of noise which would be too minuscule to study otherwise.
+\end_layout
+
+\begin_layout Subsection*
+B
+\begin_inset space \enskip{}
+\end_inset
+
+Johnson-Nyquist Noise and The Central Limit Theorem
+\end_layout
+
+\begin_layout Itemize
+After learning and experimenting with voltage amplifiers in the first part
+ of the lab, examining Johnson-Nyquist noise made a lot more sense.
+ Because the produced thermal noise in a resistor is fairly small, amplifying
+ the noise signal can lead to further statistical analysis on the properties
+ of the noise.
+ Additionally, the noise figure of a circuit can be viewed as the measure
+ of the circuit's signal noise.
+ The noise figure also defines the performance, specifications, and properties
+ of the circuit as a radio receiver.
+ In radio astronomy, the flux of different stars observed by a telescope
+ can be contributed to the thermal noise produced in the receiver itself.
+ 
+\end_layout
+
+\begin_layout Itemize
+By implementing and demonstrating the Central Limit Theorem in Python, it
+ became more obvious as to how non-Gaussian random distributions converge
+ to Gaussian distributions.
+ Because ensembles of many different random processes converge to Gaussian
+ distributions, normal distributions are everywhere; including in Johnson-Nyquis
+t noise.
+ Also, when adding together random numbers or distributions of numbers,
+ the variance of the sum is equivalent to the sum of the variance of the
+ numbers.
+ This means that if a group of samples are drawn from the same distribution
+ and averaged, then the standard deviation will decrease as the square root
+ of the number of samples averaged.
+ This is why a better estimate can be achieved by making a bunch of independent
+ measurements taken as the square-root of the number of measurements.
+\end_layout
+
+\begin_layout Section*
+V
+\begin_inset space \enskip{}
+\end_inset
+
+Conclusion
+\end_layout
+
+\begin_layout Subsection*
+A
+\begin_inset space \enskip{}
+\end_inset
+
+Troubleshooting
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \hspace{}
+\length 1.55em
+\end_inset
+
+Finding specific circuit components at UC Berkeley's undergraduate radio
+ astronomy lab was actually really difficult.
+ Many times, specific valued resistors, capacitors, and inductors needed
+ to construct the circuits could not be found.
+ There was also a short of NPN BJTs, diodes, and coaxial cable adapters.
+ Furthermore, just about all of the amplifiers available needed to measure
+ noise figures for the last part of the lab were broken.
+ To complete this lab, components were brought from outside out of the expense
+ of my partners and I.
+\end_layout
+
+\begin_layout Subsection*
+B
+\begin_inset space \enskip{}
+\end_inset
+
+What Was Learned
+\end_layout
+
+\begin_layout Standard
+\begin_inset space \hspace{}
+\length 1.55em
+\end_inset
+
+Complex circuits such as FM signal demodulators and voltage amplifiers can
+ be broken down and understood by their individual sub-circuits and components.
+ Besides getting more experience with constructing and analyzing complex
+ circuits, I learned a lot about how FM signal demodulators extract carrier
+ waves from FM signals, how NPN transistors can be used to produce amplifiers,
+ Johnson-Nyquist noise, and the implications of the Central Limit Theorem.
+ This was also my first experience coding in Python and using LaTeX.
+ Because the only other programming language I was familiar with was C++,
+ there was a learning curve getting used to the syntax.
+ However, by the end of the lab, I felt pretty comfortable using both languages.
+\end_layout
+
+\begin_layout Section*
+VI
+\begin_inset space \enskip{}
+\end_inset
+
+References
+\end_layout
+
+\begin_layout Enumerate
+Horowitz, P., & Hill, W.
+ (1989).
+ The Art Of Electronics.
+ (2nd ed., pp.
+ 76-77).
+ New York: Cambridge University Press.
+\end_layout
+
+\begin_layout Enumerate
+Undergraduate radio lab.
+ (2014, February 10).
+ Retrieved from https://casper.berkeley.edu/astrobaki/index.php/Undergraduate_Radio
+_Lab
+\end_layout
+
+\begin_layout Enumerate
+Lab Partners: Kyle Moses and Aaron Tran.
+\end_layout
+
+\end_body
+\end_document

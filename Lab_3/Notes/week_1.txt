@@ -1,0 +1,45 @@
+# ========================================================================== #
+# File: lab_3_week_1.txt                                                     #
+# Programmer: Patrick Kantorski                                              #
+# Date: 03/04/14                                                             #
+# Class: Astronomy 121 - Radio Astronomy Lab                                 #
+# Time: T 6:00-9:00 PM                                                       #
+# Instructor: Aaron Parsons                                                  #
+# Description: Notes from Lab 3, Week 1.                                     #
+# ========================================================================== #
+
+// Notes on coordinate systems:
+
+Main types of coordinate systems-
+   1. Galactic (won't be used)
+   2. Equitorial (RA, dec)
+	z (up) = north pole (Polaris)
+	y = east
+	x = radially out from pole
+   3. Topocentric (altitude, azimuth)
+	y = north
+	z = up from your position on Earth
+	x = east
+	
+   For convention, use (RA, dec) (an analogous to lattitude/longitude) for equitorial coordinates.
+
+Topocentric-
+   Azimuth = start at north (y), rotate clockwise to measure
+   Altitude = go upwards
+   Nice and simple for telescope positioning.	
+
+// Problems:
+
+Sidereal Time-
+   Sun returns to the same position on earth after 24h.
+   However, the earth is also in motion around the sun.
+   This time difference between the rotation and motion is called severial time.
+   This is why actual days are slighlty shorter than 24h, ~23.98h or 86164 seconds. (password in astronomy!)
+
+Precession/Nutation-
+   Coordinates given for a particular epoch.
+   They need to precess within the current epoch (precessing your coordinates).
+   Reason for the seasons on earth.
+
+Rotations-
+

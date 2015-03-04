@@ -1,0 +1,3 @@
+# Exclude data directory
+Lab_4/Data/*
+Final_Lab_Data/*

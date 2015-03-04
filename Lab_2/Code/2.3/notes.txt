@@ -1,0 +1,19 @@
+{'FPGA LO': False,
+ 'MIXFREQ': 10000000.0,
+ 'ROACHMIX': True,
+ 'SAMPRATE': 200000000.0,
+ 'SIGFREQ': 9500000.0}
+ 
+ LO = samplerate * 2^m / 256
+ 
+ LO 625000
+ 
+ -375 0000
+ 1625 0000
+ 
+ array([['SAMPRATE', 200000000.0],
+        ['SIGFREQ', 10000000.0],
+        ['MIXFREQ', 3.0],
+        ['FPGA LO', True],
+        ['ROACHMIX', True]], dtype=object)
+

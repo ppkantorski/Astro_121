@@ -1,0 +1,843 @@
+%% LyX 2.0.7.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,english]{article}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\usepackage{varioref}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\lyxmathsym}[1]{\ifmmode\begingroup\def\b@ld{bold}
+  \text{\ifx\math@version\b@ld\bfseries\fi#1}\endgroup\else#1\fi}
+
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\title{Mapping The Warp of the Milky Way Galaxy}
+
+
+\author{Patrick Kantorski}
+
+
+\date{May 5, 2014}
+\maketitle
+\begin{abstract}
+Utilizing 3 hours of observation time, my lab parters and I collected
+data on the power spectrum of the High Velocity Clouds in the Milky
+Way galaxy using the radio telescope at the Leuschner Observatory.
+Our pointing ranged from $l=75^{\lyxmathsym{\textopenbullet}}$, $b=+20^{\lyxmathsym{\textopenbullet}}\rightarrow-20^{\text{\textopenbullet}}$
+with each pointing collected with an integration time of about 4 minutes.
+After converting frequency information into velocities and distances,
+we convolved a Gaussian profile as the kernel to smooth the data and
+also removed any noise below temperatures of 0K. Using the Python
+module 'PyLab', we created an image plotting the distance from and
+height above the galactic center, mapping temperatures to color intensities.
+The result of the experiment shows an uneven distribution of H1 emissions
+above and below the galactic plane.
+\end{abstract}
+\tableofcontents{}
+
+
+\section{Introduction}
+
+
+\subsection{The Leuschner Radio Telescope}
+
+The radio telescope used for in this lab is located at the Leuschner
+Observatory at a latitude of $+37.8732^{\lyxmathsym{\textopenbullet}}$
+and longitude of $\lyxmathsym{\textminus}122^{\lyxmathsym{\textopenbullet}}9\lyxmathsym{\textasciiacute}$
+in Berkeley, California. The Leuschner Observatory is a student observatory
+ran by the Astronomy Department of the University of California at
+Berkeley. The diameter of the dish is approximately 4.5m and operates
+at a frequency range from 1320\textminus{}1740MHz with a 110MHz bandwidth.
+The telescope operates with mixed local oscillator signals transferred
+to an ADC after passing through two bandpass filters in order to minimize
+contaminations from other signal frequencies.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.48]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/Leuschner_circuit}
+\par\end{centering}
+
+\caption{This is a picture of the circuit diagram schematics for the 4.5m diameter
+radio telescope at the Leuschner Observatory in Berkeley, California.
+(Image was taken from http://ugastro.berkeley.edu/radio/leuschner/Leuschner\_circuit.png
+on May 4, 2014.) \label{fig: Doppler Shift-1-2}}
+\end{figure}
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.18]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/dish}
+\par\end{centering}
+
+\caption{This is a picture of the 4.5m diameter radio telescope at the Leuschner
+Observatory in Berkeley, California ($\lyxmathsym{\textminus}122^{\lyxmathsym{\textopenbullet}}9^{\prime}$,$+37.8732^{\lyxmathsym{\textopenbullet}}$).
+Wiring runs from the telescope to the near by building underground
+where they are processed through the electronics required for operation.
+(Image was taken from http://ugastro.berkeley.edu/pictures/science/leuschner/radio/dish.jpg
+on May 4, 2014.) \label{fig: Doppler Shift-1}}
+\end{figure}
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.44]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/feedmatch_equipment_writing}
+\par\end{centering}
+
+\caption{This is a picture of the electronics used to operate the 4.5m radio
+telescope at the Leuschner Observatory along with the actual reflector
+detector of the telescope itself. (Image was taken from http://ugastro.berkeley.edu/pictures/science/leuschner/radio/feedmatch\_equipment\_writing.jpg
+on May 4, 2014.) \label{fig: Doppler Shift-1-1}}
+\end{figure}
+
+
+
+\subsection{Mapping The Galactic Warp}
+
+External galaxies are often distorted by nearby galactic neighbors.
+To determine if the Milky Way galaxy is distorted or 'warped', my
+partners and I used the radio telescope at the Leuschner Observatory
+and profiled a section of the sky vertically slicing across the galactic
+plane. Hypothetically, a 'flat' galaxy would have emission peaks everywhere
+at galactic latitude $b=0^{\circ}$. To observe and display these
+distortions, we were only able to take one complete vertical profile
+of the Milky Way. If our galaxy does experience a warp, the result
+of this experiment should show an uneven distribution of H1-emissions
+along galactic latitudes above and below $b=0^{\circ}$.
+
+
+\section{Background Theory}
+
+
+\subsection{Hydrogen 21cm Line}
+
+The intrinsic spin property of the electron in a Hydrogen causes the
+atom to emit a photon at precisely a distance known as the 21cm line
+or a frequency of 1420.4MHz. Additionally, the transition between
+the three-fold degenerate triplet states and the non-degenerate singlet
+state in Hydrogen atoms have an energy difference $\Delta E=h\nu\thickapprox5.874\times10^{-9}eV$.
+This energy difference in transmitted by photons when the spin state
+of the electron flip from their alignment with the spin state of the
+proton to an anti-aligned position. Since the frequency of 1420.4MHz
+is in the radio wave band of the light spectrum, H1-emissions penetrate
+most of the dust along the line-of-sight and are not absorbed or scattered.
+Utilizing the 21cm line, radio astronomers can examine spectra line
+emissions and study the propagation of H1-emitted photons across the
+vacuum of space.
+
+
+\subsection{The Doppler Effect}
+
+The Doppler effect is the change in frequency of a wave or periodic
+event for an observer in motion relative to a source. An everyday
+example of the doppler effect can be examined when a vehicle emitting
+a siren or horn approaches, passes, and then recedes away from an
+observer. As the sound waves approach, the frequency of the sound
+increases, making the pitch of the sound also higher. As the vehicle
+recedes, the frequency and pitch diminishes. This is because each
+wave takes slightly less time to reach the observer than the previous.
+For light waves, the effect is the same. While photons travel through
+space, the color or frequency of the wave also stretches and contracts.
+making the waves \char`\"{}bunch together\char`\"{}. On the contrary,
+if the wave source is moving away from the observer, the waves \char`\"{}spread
+out\char`\"{}. This ``bunching'' and ``spreading'' of propagating
+light waves is known as red and blue shift.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.46]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/doppler_effect}
+\par\end{centering}
+
+\caption{As waves propagates across space, the wavelength resulting from the
+motion of the source will either stretch or contract depending on
+its direction of motion. (Image was taken from http://en.wikipedia.org/wiki/File:Doppler\_effect\_diagrammatic.svg
+on May 4, 2014.) \label{fig: Doppler Shift}}
+\end{figure}
+
+
+Additionally, the velocity of the observer and the source are determined
+by the medium through which the waves are transmitted. The total Doppler
+effect therefore results from the motion of the source, the observer,
+and the medium and each of these effects must be analyzed separately.
+To find the Doppler velocity of light waves, we can use Equation \ref{eq:doppler}
+shown below. In this equation, $\Delta\nu=\nu_{obs}-\nu_{0}$ and
+$c$ is the speed of light. However, for waves which do not encounter
+much of a medium like light from point sources, only the relative
+difference in velocities between the observer and the source have
+to be considered. 
+
+\begin{equation}
+v_{doppler}=-\left(\frac{\Delta\nu}{\nu_{0}}\right)c\label{eq:doppler}
+\end{equation}
+
+
+
+\subsection{Galactic Coordinate Transformation}
+
+The galactic coordinate system is an astronomical coordinate system
+based on the position of the sun about the center of the Milky Way.
+Galactic longitude ($l$) measures the angular distance of an object
+eastward along the galactic equator from the galactic center. Galactic
+latitude ($b$) measures the angular distance of an object above the
+galactic equator with positive to the north and negative to the south.
+These coordinates are an analogous to terrestrial longitude and latitude
+and are usually measured in degrees.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.48]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/Galactic_coordinates}
+\par\end{centering}
+
+\caption{In the galactic coordinate system, because of the large distances,
+the Sun is placed at the origin. Galactic longitude ($l$) is measured
+from the direction from the Sun to the center of the galaxy on the
+galactic plane. Galactic latitude ($b$) measures the angle above
+the galactic plane. Additionally the region between the sun's orbit
+and the galactic center is known as the solar circle. (Image was taken
+from http://en.wikipedia.org/wiki/File:Galactic\_coordinates.JPG on
+May 5, 2014.)\label{fig: Galactic coordinates}}
+\end{figure}
+
+
+In spherical coordinates, the position of stars are often expressed
+in right ascension and declination without use of a coordinate for
+distance. Because celestial objects are extremely far way, astronomers
+often have little to no information about their exact distances and
+therefore use only the object's direction. Additionally, the direction
+of fairly distant objects is the same for all observers and it is
+convenient to specify this direction with the same coordinates for
+every object. Using Equation \ref{eq:spherical} shown below, we can
+convert from terrestrial latitude and longitude to spherical coordinates
+($\alpha,\delta$).
+
+\begin{equation}
+\vec{x}=\left[\begin{array}{c}
+\cos(lat)\times\cos(long)\\
+\cos(lat)\times\sin(long)\\
+\sin(lat)
+\end{array}\right]\label{eq:spherical}
+\end{equation}
+
+
+The horizontal coordinate system is a celestial coordinate system
+that utilizes an observer's local horizon as it's fundamental plane.
+This coordinate system divides the sky into an upper hemisphere and
+a lower hemisphere. In the upper hemisphere, objects and stars are
+visible or within sight while in the lower hemisphere, the our view
+of the sky is blocked by the Earth. The ``great circle'' separating
+hemispheres is called celestial horizon or rational horizon and the
+pole of the upper hemisphere is called the zenith. Using the spherical
+coordinates ($\alpha,\delta$) and multiplying it by the rotational
+matrix shown in Equation \ref{eq:sphere convert}, coordinates in
+terrestrial latitude and longitude can be converted into celestial
+coordinates ($az,alt$). Additionally, this depends on the observer's
+terrestrial latitude $\phi$.
+
+\begin{equation}
+R_{(\alpha,\delta)\rightarrow(az,alt)}=\left[\begin{array}{ccc}
+-\cos(LST)\times\sin(\phi) & -\sin(LST) & \cos(LST)\times\cos(\phi)\\
+\sin(LST)\times\sin(\phi) & -\cos(LST) & -\sin(LST)\times\cos(\phi)\\
+\cos(\phi) & 0 & \sin(\phi)
+\end{array}\right]\label{eq:sphere convert}
+\end{equation}
+
+
+Because the Milky Way galaxy is extremely large and takes a long time
+to complete a full rotation, galactic coordinates do not change much
+on ``Earth-based'' scales of time. To convert terrestrial coordinates
+to galactic, we can utilize the rotational matrix shown in Equation
+\ref{eq:HA, Dec to l, b}. By multiplying spherical right ascension
+and declination coordinates by the rotational matrix shown below in
+Equation \ref{eq:HA, Dec to l, b}, we can convert ($\alpha,\delta$)
+coordinates to ($l,b)$ coordinates. Since hour angle and declination
+are ``Earth-based'' coordinates, this conversion will only depend
+on the observer's terrestrial latitude.
+
+\begin{equation}
+R_{(\alpha,\delta)\rightarrow(l,b)}=\left[\begin{array}{ccc}
+-0.054876 & -0.873437 & -0.483835\\
+0.494109 & -0.444830 & 0.746982\\
+-0.867666 & -0.198076 & 0.455984
+\end{array}\right]\label{eq:HA, Dec to l, b}
+\end{equation}
+
+
+
+\section{Methods and Observations}
+
+
+\subsection{Operating The Telescope}
+
+To operate and control the 4.5m radio telescope at the Leuschner Observatory,
+my partners and I programmed and remotely ran a Python script on Leuschner's
+local computer via SSH. Since the H1-emission line is centered at
+about 1420.4MHz and is present within a 12MHz Nyquist zone, we chose
+to set our L.O. frequency to a range 12 Nyquist zones, or 144MHz,
+away. We also added an additional 6MHz, half the nyquist frequency,
+to center the H1-line. This made the center emission at a frequency
+of about 1270.4MHz. For our observations, we also programmed the telescope
+to take four separate measurements per pointing for the purpose of
+calibrating our data. The four measurements taken include a sample
+with the L.O.'s frequency set to 2MHz above the center frequency at
+1272.4MHz, $10dB_{m}$, another with the frequency shifted 2MHz below
+at 1268.4MHz, $10dB_{m}$, and two measurements using a noise diode
+to add $T_{noise}=100K$ to the total system temperature $T_{sys}$
+of each signal. When operating the telescope, we also had to ``home''
+the telescope before each measurement to make sure that it was functioning
+properly. Homing the dish resets the positioning drives of the telescopes
+and returns the telescope to its default homing position (alt=90\textdegree{},
+az=180\textdegree{}).
+
+
+\subsection{Mapping Area}
+
+The mapping area we covered for our observations was limited by the
+amount of time give to our group to operate the telescope and the
+pointing limits of the dish itself (see Figure \ref{fig:pointing limts}).
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.46]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/pointing_limits}
+\par\end{centering}
+
+\caption{This graph shows the pointing limits of the 4.5m radio telescope at
+the Leuschner Observatory. Pointing limits result from the boundaries
+of the telescope and it's location. \label{fig:pointing limts}}
+\end{figure}
+
+
+After calibrating data taken from May 2, 2014 and May 3, 2014, we
+realizing that our coordinates were being processed incorrectly and
+that the telescope did not always take valid measurements per pointing.
+In the end, the total time range of our accurate observations was
+diminished to May 4, 2014 from 17:48:37 - 20:41:31 UT. To compensate
+for this, we set our galactic coordinates to $l=75^{\circ}$ and ranged
+$b$ from $+20^{\circ}$ to $-20^{\circ}$, taking pointings at a
+spacing of $2^{\circ}$. To ensure that we had all the data from each
+pointing, we first set our coordinates to cover $4^{\circ}$ increments
+within the range of $b$. After, we set them to cover $2^{\circ}$increments
+and then another set of $4^{\circ}$increments, but skewed by $2^{\circ}$.
+This ensured that we had at least one pointing for every position
+in our $l$ and $b$ range. Additionally, we set the integration time
+of each measurement to about 4 minutes per pointing or 8192 data points
+per sample to ensure that our observation fell within our 3 hour observation
+window.
+
+
+\subsection{Signal Processing in Python}
+
+
+\subsubsection{Manipulating Collected Data}
+
+Observational data files collected from the radio telescope at The
+Leuschner Observatory are stored in a '.log' format. To open these
+files, I used the ``ReadSpec'' module provided on the UC Berkeley
+Undergraduate Radio Lab GitHub page and then performed a mean calculation
+on the data array. A mean was performed on the total dataset to reduce
+the size and preserve the signal information but in a more manageable
+format. To store data after calibration, I loaded the data into a
+'.npz' file with the information on the entry numbers, dates of observation,
+time stamps for each measurement, $b$ and $l$ coordinates, frequencies,
+and temperatures. After calculating velocities and distances, I created
+a separate program to create another '.npz' file to store additional
+information on the Julian dates, right ascension and declination coordinates,
+local standards of rest, velocities, and distances.
+
+
+\subsubsection{Median Boxcar Smoothing}
+
+Another signal processing method that I used to clean and filter out
+bad data points from the raw data files is called ``Median Boxcar
+Smoothing''. This is done by running a median across data within
+a window of points before and after every data point. By taking the
+median value within a window across all of the data, a new array of
+``smooth'' data points positioned along the shape of the raw signal
+will be produced. Because the number of elements in our data is approximately
+8192, I made the radius of my boxcar 11 points.
+
+In order to remove bad data points, I first subtracted out the smoothed
+data from the raw data to normalize the signal about the frequency
+axis. Then, by placing a cutoff range along the power axis above and
+below four times the standard deviation of the total normalized signal,
+I was able to find the position of each invalid point that deviates
+significantly from the standard deviation value. Since both arrays
+were of the same dimension, the outlier positions should be the same
+for both datasets. Finally, I replaced the bad data in the raw data
+with data points taken from the smoothed data.
+
+
+\subsubsection{Polynomial Curve Fitting}
+
+While calibrating the spectral lines, we also must remove the baseline
+from the final product in order to isolate the H1-emission signal.
+To do this, I used a 5th order polynomial curve to fit to the underlining
+baseline shape of the data. Additionally, this was done Python using
+the ``PolyFit'' function in the Numpy module.
+
+
+\section{Data Analysis}
+
+
+\subsection{Temperature Calibration}
+
+The initial data points taken are from the radio telescope are recorded
+in units of power versus frequency. To calibrate the data, I converted
+the spectral lines into units of temperature with a script written
+in Python. Before doing this, my partners and I programmed the telescope
+to record four separate measurements per pointing with equal integration
+times. As I previously mentioned, the four measurements include a
+sample with the local oscillator's frequency set to 1272.4MHz at $10dB_{m}$,
+another with the L.O. frequency shifted 4MHz below at 1268.4MHz, $10dB_{m}$,
+and two measurements using a noise diode to add $T_{noise}=100K$
+to the total system temperature $T_{sys}$ of each signal. To refer
+to each of these signals respectfully, the subscript ``ONLINE''
+was set for the higher frequency measurement and ``OFFLINE'' for
+the lower one along with ``CALON'' or ``CALOFF'' for noise on
+or off. The CALON measurements, as expected, increased the gain of
+the signals. Additionally, after examining all four raw data measurements,
+it was noticed that the gain of the lower 1268.4MHz signal was slightly
+larger than the gain of the 1272.4MHz signal (see Figure \vref{fig:raw data}).
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/raw_data}
+\par\end{centering}
+
+\caption{This graph is of the four raw data measurements taken from May 4,
+2014 from 19:44:09.18 - 19:48:02.82 UT at $b=-10^{\circ},$ $l=75^{\circ}$.
+ONLINE measurements at 1272.4MHz are shown in black while OFFLINE
+measurements at 1268.4MHz are shown in blue. CALON for each ONLINE
+and OFFLINE measurement is the data shown in the same color above
+while CALOFF is shown below. \label{fig:raw data}}
+\end{figure}
+
+
+
+\subsubsection{Calibration Process}
+
+The first step to calibrate for the spectral lines is to find the
+system temperature of each of the ONLINE and OFFLINE signals. As shown
+in Equation \vref{eq:System Temperature}, by multiplying the noise
+temperature with the proportionality between the total sum of the
+CALON measurements and the sum of the difference between the CALON
+and CALOFF measurements, the system temperature of each measurement
+can be approximated.
+
+\begin{equation}
+T_{sys}=\left[\frac{\sum P_{j}^{CALON}}{\sum\left(P_{j}^{CALON}-P_{j}^{CALOFF}\right)}\right]\times T_{noise}\label{eq:System Temperature}
+\end{equation}
+
+
+After, the next step in calibration is to isolate the shape of the
+ONLINE and OFFLINE, CALOFF signal. To do this, one of the measurements
+have to be scaled down to the same level as the other. This can be
+done by multiplying the OFFLINE dataset by the gain factor shown in
+Equation \vref{eq:Gain Conversion}. Figure \vref{fig:gain fix} shows
+the result of applying this equation to Figure \vref{fig:raw data}.
+
+\begin{equation}
+G=\frac{\sum P_{j}^{ONLINE,CALOFF}}{\sum P_{j}^{OFFLINE,CALOFF}}\label{eq:Gain Conversion}
+\end{equation}
+
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/gain_fix}
+\par\end{centering}
+
+\caption{This graph is of the gain conversion and cleaning of data measurements
+taken from May 4, 2014 from 19:44:09.18 - 19:48:02.82 UT at $b=-10^{\circ},$
+$l=75^{\circ}$. ONLINE measurements at 1272.4MHz are shown in black
+while OFFLINE measurements at 1268.4MHz are shown in blue. Signal
+cleaning using the method of median boxcar smoothing is shown on the
+graph on the right. As seen on the figures, the gain conversion is
+not always perfect. However, this is offset is corrected isolating
+``shape'' of the H1-signal and scaling it with the system temperature.\label{fig:gain fix}}
+\end{figure}
+
+
+After setting the ONLINE and OFFLINE, CALOFF measurements to the same
+level, the next step is to extract the underlining signal ``shape''.
+First, the OFFLINE measurements have to also be shifted back 4MHz
+to the left so that they aligns with the ONLINE measurements. Next,
+the section of the data including the H1-emission must be isolated
+on each set along with the corresponding sections that do not have
+any H1-emission present. Following Equation \vref{eq:HI Temperature},
+by using the ``shape'' of the H1-signal and scaling it with the
+system temperature, the data in terms of H1 temperature can finally
+be calculated.
+
+\begin{equation}
+T_{ant,HI}^{ONLINE}(\nu)=\left[\frac{P_{+HI}^{ONLINE}}{P_{none}^{OFFLINE}}\right]\times T_{sys}^{ONLINE},\quad T_{ant,HI}^{OFFLINE}(\nu)=\left[\frac{P_{+HI}^{OFFLINE}}{P_{none}^{ONLINE}}\right]\times T_{sys}^{OFFLINE}\label{eq:HI Temperature}
+\end{equation}
+
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/calibrate_raw}
+\par\end{centering}
+
+\caption{The graph shown above was made from data measurements taken from May
+4, 2014 from 19:44:09.18 - 19:48:02.82 UT at $b=-10^{\circ},$ $l=75^{\circ}$.
+ONLINE measurements at 1272.4MHz are shown in black while OFFLINE
+measurements at 1268.4MHz are shown in blue. After applying Equation
+\vref{eq:HI Temperature} to the section of data ranging from 1418.94
+- 1421.86MHz, the signals become scaled to units of Kelvin. Because
+there units in K cannot fall below 0K, a polynomial had to be fit
+to the data in order to normalize it.\label{fig:calibrate_raw}}
+\end{figure}
+
+
+To convert both ONLINE and OFFLINE calibrated temperature spikes into
+a final spectra, the underlining shape or ``base-line'' resulting
+from the artifacts left in the signal must also be removed from the
+datasets in order to normalize and preserve the H1-emission spectra.
+This can be done by removing the H1-emission lines from the calibrated
+temperature datasets and then fitting a polynomial function to the
+shape of the base-line. Then, by subtracting the polynomial fit from
+the original ONLINE and OFFLINE temperature calibrated datasets, the
+H1-emission line on both datasets can be properly normalized. The
+final step is to then combine and average the two isolated H1-emission
+datasets (see Equation \vref{eq:Final HI Temperature}).
+
+\begin{equation}
+T_{ant,HI}(\nu)=\frac{1}{2}\left(T_{ant,HI}^{ONLINE}(\nu)+T_{ant,HI}^{OFFLINE}(\nu)\right)\label{eq:Final HI Temperature}
+\end{equation}
+
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/calibrate_final}
+\par\end{centering}
+
+\caption{The graph shown above was made from data measurements taken from May
+4, 2014 from 19:44:09.18 - 19:48:02.82 UT at $b=-10^{\circ},$ $l=75^{\circ}$
+calibrated from power to units of Kelvin. After applying Equation
+\vref{eq:Final HI Temperature} to the the difference between the
+polynomial fit and the two datasets in Figure \vref{fig:calibrate_raw},
+we get the final calibrated spectra.\label{fig:calibrate final}}
+\end{figure}
+
+
+
+\subsubsection{Error Propagation}
+
+When taking a long integration and combining spectra, assuming each
+spectra has statistically the same error $\Delta T_{sys}$, then the
+error in the sum can be found as shown below in Equation \vref{eq:Error in Sum}.
+
+\begin{equation}
+(error\, in\, sum)^{2}=\left[\sum_{0}^{N-1}(\Delta T_{sys,n})^{2}\right]=N(\Delta T_{sys})^{2}\label{eq:Error in Sum}
+\end{equation}
+
+
+\begin{equation}
+(error\, in\, average)^{2}=\frac{\left(\Delta T_{sys}\right)^{2}}{N}\label{eq:Error in Avg}
+\end{equation}
+
+
+The average value of a dataset is equal to the sum divided by $N$.
+This makes the error associated with averaging squared approximately
+equal to the error in the sum squared divided by $N^{2}$. Thus the
+error in averaging is shown by Equation \vref{eq:Error in Avg}. After
+taking the square root of the equation, we can see how how the noise
+in the data measurements decreases with the square root of $N$, the
+number of times that a measurement is repeated. Applying this equation
+to the general form of Equation \vref{eq:HI Temperature}, we get
+the following expression.
+
+\begin{equation}
+\delta T_{sys}(\nu)^{2}=\left[\left(\frac{\delta P_{j}^{ONLINE,CALOFF}}{P_{j}^{ONLINE,CALOFF}}\right)^{2}+\left(\frac{\delta P_{j}^{OFFLINE,CALOFF}}{P_{j}^{OFFLINE,CALOFF}}\right)^{2}\right](T_{sys})^{2}\label{eq:Error of Seperate}
+\end{equation}
+
+
+Since the statistical properties of $P_{j}^{ONLINE,CALOFF}$and $P_{j}^{OFFLINE,CALOFF}$are
+the same, we can simplify the expression and combine the contributions
+of the two spectra (see Equation \vref{eq:Error Total}). Therefore,
+the noise in $\delta T_{sys}(\nu)^{2}$ increases by a multiplicative
+factor of 2 or the noise in $T_{sys}(\nu)$ by a factor $\sqrt{2}$.
+Although the ONLINE measurements contain the desired signal information,
+it is false to assume that spending more time collecting ONLINE than
+the OFFLINE measurements will optimize the accuracy of the data calibration.
+The best results are obtained by spending an equal amount of time
+on each pointing. This is because equal amounts of integration time
+produces statistically equal amounts of signal noise per pointing.
+Furthermore, since there is no way obvious way around inducing some
+signal noise into our data calibration, it is impossible to generate
+a completely ``noise-free'' spectrum.
+
+\begin{equation}
+\delta T_{sys}(\nu)^{2}=2\left(\frac{\delta P_{j}^{ONLINE,CALOFF}}{P_{j}^{ONLINE,CALOFF}}\right)^{2}(T_{sys})^{2}\label{eq:Error Total}
+\end{equation}
+
+
+
+\subsection{Cloud Velocities}
+
+Since the HI-line frequency is centered about 1420.4MHz, when the
+line appears at different frequencies, we can conclude that the signals
+must have been Doppler shifted. Using Equation \vref{eq:doppler},
+the velocities corresponding to each frequency can be calculated.
+However, the return accurate Doppler velocity values, we much also
+correct our measurements to the Local Standard of Rest (LSR). The
+LSR is a velocity that accounts for the movement of our solar system
+about the galactic center. In our observation, our LSR correction
+ranged from -28.9693km/s to -35.7493km/s. Furthermore, to find the
+velocities corresponding to our line of sight, we must also divide
+our velocity by the cosine of the inclination angle $b$ (See Equation
+\vref{eq:correct velocity}).
+
+\begin{equation}
+v_{measured}=\left(v_{doppler}-LSR\right)\left(\frac{1}{\cos\left(b\right)}\right)\label{eq:correct velocity}
+\end{equation}
+
+
+Figure \vref{fig:velocity vs temp} shows the result of converting
+the frequency axis of our dataset into velocities plotted against
+temperature. For positions within the solar circle that our solar
+system is approaching (see Figure \vref{fig: Galactic coordinates}),
+velocities are red shifted while positions outside are blue shifted.
+On the contrary, for positions within the solar circle that our solar
+system is receding from, the velocities are blue shifted while the
+positions outside are red shifted. This red and blue shift is the
+result of our location direction of motion within the Milky Way. 
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/velocity_vs_temp}
+\par\end{centering}
+
+\caption{This graph is of all the calibrated data from the May 4, 2014 observation
+in terms of velocity (km/s) and temperature (K). The data points on
+the left side of the dashed line are signals that has been red shifted
+while data points to the right are blue shifted. \label{fig:velocity vs temp}}
+\end{figure}
+
+
+
+\subsection{Distance Calculations}
+
+To convert our data from velocities into the associated corresponding
+distances, the angle $l$, velocity of the Sun about the galactic
+center $v_{0}\approx220km/s$, and the distance between the two $D_{0}\approx8kpc$
+can be utilized. If we form a right triangle between the Earth, the
+Sun, and positions outside the solar circle, then the angle $\alpha$
+can be thought of as the additional angle behind the Sun required
+to complete $90^{\circ}$ (see Equation \vref{eq:angular conversion factor}).
+Additionally, since we know the Sun's velocity, the corrected Doppler
+velocities, and galactic longitude $l$, $\alpha$ can be calculated
+for each dataset.
+
+\begin{equation}
+\alpha=\arcsin\left(\frac{v_{measured}}{v_{0}}-\sin\left(l\right)\right)+l\label{eq:angular conversion factor}
+\end{equation}
+
+
+Using angle $\alpha$, the distance between the Sun and the galactic
+circle $D_{0}$, and some clever geometry, we can derive a distance
+equation for our measurements (see Equation \vref{eq:distance eqn}). 
+
+\begin{equation}
+D=D_{0}\left[\sin\left(90^{\circ}-l\right)+\sin\left(l\right)\tan\left(90^{\circ}-\alpha+l\right)\right]\label{eq:distance eqn}
+\end{equation}
+
+
+After converting the velocities into units of distance, my partners
+and I also solved for the heights above and below the galactic plane
+by using the distance $D$ and galactic latitude angle $b$ (see Equation
+\vref{eq:height eqn}).
+
+\begin{equation}
+H=D\times\tan\left(b\right)\label{eq:height eqn}
+\end{equation}
+
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.56]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/dist_height_temp}
+\par\end{centering}
+
+\caption{This graph is of all the calibrated data from the May 4, 2014 observation
+in terms of distance (kpc) and temperature (K) on the left and distance
+(kpc) and height (kpc) above the galactic plane on the right. As the
+distances between us and what we are observing increases, we begin
+to see a drop in the overall temperature. Values ranging from 0 -
+3kpc are emissions that has been red shifted. Because of the limited
+amount of time, my partners and I decided to neglect these values.
+Additionally, because measurements were taken spaced out in $b$ by
+$2^{\circ}$, the resolution of our dataset was fairly limited. \label{fig:dist vs velocity & dist vs height}}
+\end{figure}
+
+
+
+\subsection{Imaging the Galactic Warp}
+
+
+\subsubsection{Generating the Image}
+
+Using the final calibrated data, we were able to construct an image.
+By averaging degenerate datasets, convolving them with a gaussian
+filter, and zeroing values with intensities below 0K, we were able
+to map intensity to the second plot shown on Figure \vref{fig:dist vs velocity & dist vs height}.
+To do this, we first constructed a new image array with x values ranging
+from 0kpc to 25kpc and y values from -10kpc to 10kpc. Treating each
+square of information on this picture as a single pixel, the final
+picture came out to a resolution of roughly 0.1kpc/pix. After, data
+points were then divided by the resolution to fill every pixel on
+the array with information with intensities mapped to each pixel.
+
+\begin{equation}
+kernal=\exp-\left[\frac{x^{2}}{2\sigma_{x}^{2}}+\frac{y^{2}}{2\sigma_{y}^{2}}\right]\label{eq:kernal}
+\end{equation}
+
+
+The next step was to define weights for the image in order to keep
+track of the number of data points per pixel and create Gaussian kernel
+function to convolve or smooth the intensities (See Equation \vref{eq:kernal}).
+By convolving our image and then dividing it by the weights, we were
+able to essentially average our data points, bringing them to the
+corrected levels of intensities. To ensure that the image only convolves
+meaningful data points, if the pixel of information was not within
+a range of 3 pixels, the weights were set to 0K.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.42]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/final_image_fix}
+\par\end{centering}
+
+\caption{The graph above is a plot all of the data collected from the May 4,
+2014, 17:48:37 - 20:41:31 UT observation. Information is plotted in
+terms distance from our solar system, height above the galactic plane,
+and temperature intensity in units of Kelvin. on the right. As the
+distances between us and what we are observing increases, we begin
+to see a drop in the overall temperature. Additionally, because we
+took measurements spaced out in $b$ by $2^{\circ}$, the resolution
+of our dataset shown on the right was limited. For prosthetic purposes,
+red shifted data points or points between 0-3kpc were filled in with
+the intensity along the border between red and blue shifts. \label{fig:final image}}
+\end{figure}
+
+
+
+\subsubsection{Basic Photometric Implications}
+
+The optical depth of the H1-emissions along the galactic plane can
+be taken from the application of Equation \vref{eq:optical depth},
+where $T_{actual}$ is temperature intensity, $\tau$ is the optical
+thickness, $\sigma_{area}$ is the cross-sectional area of the H1
+emissions, and $N_{emission}$ is the column density or amount of
+particles per unit of volume.
+
+\begin{equation}
+(optical\, depth)=T_{actual}e^{-\tau},\quad\tau=\sigma_{area}N_{emission}\label{eq:optical depth}
+\end{equation}
+
+
+Small values of optical thickness correspond to more information within
+the visible line of sight. In the case when the optical thickness
+$\tau\ll1$, the optical depth reduces to the form $T_{actual}\sigma_{area}N_{emission}$.
+So, for optically thin regions, the optical depth is larger. When
+viewing Figure \vref{fig:final image}, the regions through which
+H1 temperatures are plotted are optically thin while the lower temperature
+regions are optically thicker or experience more extinction as a result
+of dense H1 gas. The region around a distance of 10kpc looks like
+it may be extinction resulting from the spiral arms of our galaxy.
+Furthermore, because of the uneven distribution of H1 gas and uneven
+distributions above and below the galactic plane, Figure \vref{fig:final image}
+supports the concept of galactic warping in the Milky Way. However,
+additional data collections may be required before a solid conclusion
+can be derived.
+
+
+\section{Conclusion}
+
+
+\subsection{Troubleshooting}
+
+Several problems were encountered while trying to carry out this lab.
+The main issue was with data collection and resulted from an incorrect
+application of coordinate transformations. This was caught by me when
+I was calibrating data sets taken from May 1, 2014 to May 3, 2014.
+If the telescope reaches the boundary of its pointing limits, the
+H1-line ends up skewed to positions where it should not be. After
+viewing this happening on a coordinate that was known to be within
+the pointing limits of the telescope, my partners and I immediately
+knew something was wrong. After fixing the rotational matrices in
+our observation code, my partners and I were limited to a 3 hour window
+on May 4, 2014 for data collection. Other groups performing experiments
+using the 4.5m radio telescope at the Leuschner Observatory were given
+more time for their observations based on necessity to complete their
+report. Since our experiment did not require as much data, the window
+of observation given to us was already small.
+
+Another issue we noticed was that some of our observations were returning
+empty values. To ensure this problem did not happen again, we took
+multiple vertical profiles for our last observation, reducing the
+resolution of our final image. Nevertheless, with 3 hours of observation
+time, we were still able to show evidence to support the galactic
+warp of the Milky Way galaxy.
+
+
+\subsection{Results}
+
+With more vertical profiles of the Milky Way at a higher resolution,
+my partners and I would have been able to make a more detailed image
+of the galactic warp of the Milky Way galaxy. By plotting multiple
+profiles and mapping it to the vertical displacement of the H1-emissions,
+a picture like Figure \vref{fig:galactic warp} could have been constructed.
+Regardless, I personally am fairly satisfied with the image we constructed
+in the limited amount of observation time we were given. 
+
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[scale=0.52]{/Users/ppkantorski/Documents/Radio_Astronomy/Lab_4/Pictures/galactic_warp}
+\par\end{centering}
+
+\caption{Final galactic warp image created by the undergraduate radio astronomy
+group Gamma (Andrew, Suneet, James, Nhung) made from data collected
+using the 4.5m radio telescope at the Leuschner Observatory in 2006.
+(Image was taken from http://ugastro.berkeley.edu/radio/leuschner/previous\_results/gplane\_warp.pdf
+on May 6, 2014.). \label{fig:galactic warp}}
+\end{figure}
+
+
+Radio telescopes are extremely powerful instruments capable of detecting
+emissions beyond what is observable from the optical wavelengths.
+By taking advantage of the 21cm line of H1-gas, regions of emission
+can be mapped to temperature intensities, doppler velocities, and
+distances. Ultimately, this lab has taught how to properly calibrate
+H1-emission lines, operate the radio telescope at the Leuschner Observatory,
+derive coordinates for detailed observations, and map plots to positions
+along regions of space to H1 temperature intensities. Since I want
+to enter the field of astronomy in the future, the undergraduate radio
+astronomy course offered at the University of California, Berkeley
+has been one of the most interesting and important classes for me
+and my desire to pursue research. 
+
+
+\section{Acknowledgements and References}
+\begin{enumerate}
+\item Lab Partners: Sahana Kumar, Daniel Krishan, and Marta Pastore.
+\item Additional help was also proved by Baylee Bordwell and Eduardo Herrera.
+\item Undergraduate radio lab. (2014, May 5). Retrieved May 5, 2014 from
+
+
+https://casper.berkeley.edu/astrobaki/index.php/Undergraduate\_Radio\_Lab
+
+\item Hare, J. (2005, September 23). Leuschner Observatory. Retrieved May
+5, 2014, from
+
+
+http://ugastro.berkeley.edu/leuschner/old\_site/index.html\end{enumerate}
+
+\end{document}

@@ -1,0 +1,4300 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Basic Interferometer on Point Sources, the Sun, and the Moon
+\end_layout
+
+\begin_layout Author
+By Patrick Kantorski
+\end_layout
+
+\begin_layout Date
+April 8, 2014
+\end_layout
+
+\begin_layout Abstract
+This report was written for a radio astronomy undergraduate course at UC
+ Berkeley.
+ Radio interferometry is a powerful observational method used in Radio Astronomy
+ for observing the sky in the Fourier domain.
+ In this lab, my partners and I used a local radio interferometer at Berkeley
+ to observe the Sun, the Moon, and point sources.
+ We were also able to approximate the base line of our interferometer and
+ measure the diameter of the Sun and the Moon.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The purpose of this lab on interferometry was to demonstrate diffraction
+ theory as it applies to a real radio interferometer.
+ Fringes along with their amplitudes and phases were examined along with
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+Fourier transform
+\begin_inset Quotes erd
+\end_inset
+
+ relationship between the interferometer's response and luminosity of the
+ sky.
+ Additionally, my partners and I had to learn a lot about time, coordinates,
+ and conversions to progress in this lab.
+ We also obtained horizon-to-horizon data on various astronomical sources
+ ranging from point sources to the Sun and Moon.
+ When performing data analysis, we use linear and nonlinear least-squares
+ fitting methods to filter out accurate point source positions and obtain
+ approximate diameters for the Sun and Moon along with an estimate value
+ of our two-element interferometer's baseline.
+\end_layout
+
+\begin_layout Section
+Background Theory
+\end_layout
+
+\begin_layout Subsection
+Astronomical Coordinates
+\end_layout
+
+\begin_layout Standard
+There are many different ways to go about keeping track of time and position
+ using coordinate systems.
+ For us to make and record accurate astronomical observations, we must know
+ both where on Earth we are positioned and the current time relative to
+ such location.
+ By knowing both the position and time of observations, the direction from
+ which a telescope is pointed can be accurately deciphered.
+ Latitude and longitude coordinates work well to encode relative positions
+ on the Earth.
+ However because the Earth is not perfectly spherical, detailed surveys
+ using latitude and longitude are not quite as simple as they may appear.
+ On the contrary, accurately keeping track of time has its own issues.
+ On Earth, clocks are tuned to different times according to which time zone
+ and year a person is currently in.
+ However in astronomy, using time zones to keep track of time is not particularl
+y useful.
+ To make counting time easier, astronomers use systems that do away with
+ time zones and synchronize time to the 
+\begin_inset Quotes eld
+\end_inset
+
+solar day
+\begin_inset Quotes erd
+\end_inset
+
+ at a position of 0° longitude, which also happens to conveniently run through
+ the British Royal Observatory.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/sidereal_day.png
+	scale 50
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+On Earth, because the planet experiences prograde motion, a sidereal day
+ is slightly shorter than a solar day.
+ At position 1, the Sun and a distant star behind are both directly overhead.
+ At position 2, the Earth rotates about 360°, making the distant star behind
+ the sun appear again directly overhead.
+ This shift from position 1 to position 2 is called a sidereal day.
+ However, by the time the Earth rotates back to face the Sun, as seen in
+ position 3, the Sun is again directly overhead, but the distant star behind
+ is not.
+ Since the revolution around the Sun changes the angle from which the Sun
+ is seen relative to the Earth, position 1 to position 3 shows how long
+ it takes the Sun to return to its maximum height at precisely noon everyday.
+ This shift from position 1 to position 3 is called a solar day.
+\begin_inset CommandInset label
+LatexCommand label
+name "Figure Sidereal"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A solar day is the amount of time it takes for the sun to return back to
+ the same position on Earth.
+ Another important thing to keep track of while trying to accurately track
+ time is to count seconds.
+ One might think that counting days is more practical, but in fact, days
+ can be fairly complicated.
+ Since the Earth is moving around the Sun while it is spinning around it's
+ axis, the Earth must actually rotate a little more than 60°, or 2π radians,
+ in order to return to the same position each day.
+ Instead of spinning precisely 360° every 24 hours, or 86400s, it actually
+ takes the Earth about 86164.0908s.
+ This amount of time called a sidereal day and is slightly longer than a
+ solar day (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Figure Sidereal"
+
+\end_inset
+
+).
+ For every day of the year except January 1, sidereal and solar days are
+ out of sync.
+ When trying to accurately track time, we really should start from January
+ 1.
+ However, the question then becomes what time and year relative to January
+ 1 should one begin counting from?
+\end_layout
+
+\begin_layout Standard
+In astronomy, astronomers typically count time in solar days starting from
+ noon, January 1, 4713 BC, also known as the Julian date.
+ On the other hand, computers count time in seconds from midnight at the
+ start of January 1, 1970.
+ This is called “Unix Time” and is pretty close to Coordinated Universal
+ Time (UTC) which is derived directly from atomic clocks.
+ Today, there have been a few revisions to UTC with several leap seconds
+ added in here and there.
+ Additionally, because the Earth's rotation is slowly slowing down, and
+ keeping time can become extremely complicated.
+ By using Network Timing Protocol (NTP) and/or the Global Positioning System
+ (GPS), computers and cell phones routinely synchronize their clocks to
+ atomic standards with milliseconds of precision.
+ Because UTC is widely available to most people today, this makes it relatively
+ easy for us Astronomers to accurately track time.
+\end_layout
+
+\begin_layout Subsection
+Coordinate Conversion
+\end_layout
+
+\begin_layout Subsubsection
+Longitude and Latitude
+\end_layout
+
+\begin_layout Standard
+Longitude and latitude coordinates are considered geographic coordinates
+ (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Latitude & Longitude Figure"
+
+\end_inset
+
+).
+ A geographic coordinate system is a coordinate system that enables any
+ location on the Earth to be specified by a set of numbers or letters.
+ The latitude of a point on the Earth's surface is the angle between the
+ equatorial plane and the straight line that passes through that point normal
+ to the surface.
+ Lines joining points of the same latitude form circles on the surface of
+ the Earth known as parallels because they are parallel to the equator and
+ to each other.
+ While the +90° parallel represents the north pole and -90° parallel represents
+ the south pole, the 0° parallel of latitude is at the equator which divides
+ the globe into Northern and Southern Hemispheres.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/latitude_longitude.png
+	scale 48
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+On Earth, latitude coordinates are measured as angles from the Equator to
+ +90º (North Pole) to -90º (South Pole).
+ Longitude coordinates are measured from the Prime Meridian from 0º to +180º
+ due right and from 0 to -180º due left.
+\begin_inset CommandInset label
+LatexCommand label
+name "Latitude & Longitude Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The longitude of a point on the Earth's surface is the angle east or west
+ from the reference meridian to another meridian that passes through that
+ point.
+ The Prime Meridian is the line chosen as the international zero-longitude
+ reference line and was set with the intention of passing through the British
+ Royal Observatory in Greenwich, UK.
+ Places to the east of the Prime Meridian are considered to be in the eastern
+ hemisphere while places to the west are in the western hemisphere.
+ Longitude also ranges from about -180º to +180º relative to the Prime Meridian.
+\end_layout
+
+\begin_layout Standard
+Additionally, converting from rectangular latitude and longitude coordinates
+ to spherical coordinates can be done using the vector matrix shown below
+ in Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:Long / Lat Rotation"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\vec{x}=\left[\begin{array}{c}
+\cos(lat)\cos(long)\\
+\cos(lat)\sin(long)\\
+\sin(lat)
+\end{array}\right]\label{eq:Long / Lat Rotation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Right Ascension and Declination (
+\begin_inset Formula $\alpha,\sigma$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+In spherical coordinates, the position of stars are often expressed in right
+ ascension and declination without use of a coordinate for distance.
+ Because celestial objects are extremely far way, astronomers often have
+ little to no information about their exact distances and therefore use
+ only the object's direction.
+ Additionally, the direction of fairly distant objects is the same for all
+ observers and it is convenient to specify this direction with the same
+ coordinates for every object.
+ On the contrary, through the horizontal coordinate system, a star's position
+ differs from observer to observer based on their positions on the Earth's
+ surface and continuously changes with the Earth's rotation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/ra_dec.png
+	scale 46
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The figure above shows right ascension and declination as seen on the inside
+ of the celestial sphere.
+ The primary direction of the system is the vernal equinox or where the
+ ascending node of the ecliptic in red meets the celestial equator in blue.
+ Right ascension is measured eastward along the celestial equator from the
+ primary direction while declination is measured due north or south from
+ the equator.
+\begin_inset CommandInset label
+LatexCommand label
+name "RA & Dec Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The equatorial coordinate system is a widely used celestial coordinate system
+ used to specify the positions of celestial objects.
+ Two coordinates typically used in the equatorial coordinate system are
+ the right ascension and declination (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "RA & Dec Figure"
+
+\end_inset
+
+).
+ Right ascension (symbol α, abbreviated RA) measures the angular distance
+ of an object eastward along the celestial equator from the vernal equinox
+ to the hour circle passing through the object.
+ The vernal equinox point is one of the two points where the ecliptic intersects
+ with the celestial equator.
+ In comparison to longitude, right ascension is similarly but is measured
+ in sidereal hours, minutes and seconds instead of degrees.
+ This results from measuring right ascensions by timing the passage of objects
+ across the meridian as the Earth rotates.
+ In total, there are (360° / 24h) = 15° in one hour of right ascension and
+ 24h of right ascension around the entire celestial equator.
+\end_layout
+
+\begin_layout Standard
+The celestial equator is the projection of the Earth's equator onto the
+ celestial sphere.
+ Declination (symbol δ, abbreviated Dec) measures the angular distance of
+ an object perpendicular to the celestial equator.
+ Declination ranges from +180º northward to -180º to the south.
+ The north celestial pole, for instance, has a declination of +90°.
+ The origin of the coordinate of declination is the celestial equator itself.
+ Declination can also be thought of as analogous to latitude.
+ When the two coordinates are used together, right ascension and declination
+ are typically abbreviated as (RA, Dec) or (
+\begin_inset Formula $\alpha,\sigma$
+\end_inset
+
+).
+ Because RA and Dec are an analogous to longitude and latitude, Equation
+ 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:Long / Lat Rotation"
+
+\end_inset
+
+ can also be used to convert RA and Dec to spherical coordinates.
+\end_layout
+
+\begin_layout Subsubsection
+Hour Angle and Declination (
+\begin_inset Formula $ha,\sigma$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+In the equatorial coordinate system, right ascension can also be translated
+ to hour angle (abbreviated HA or LHA).
+ Hour angle positioning is a 
+\begin_inset Quotes eld
+\end_inset
+
+left-handed
+\begin_inset Quotes erd
+\end_inset
+
+ system which measures the angular distance of an object westward along
+ the celestial equator from the observer's meridian to the hour circle passing
+ through the object (See Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Hour Angle Figure"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/hour_angle.png
+	scale 46
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The figure above shows right ascension measured eastward along the celestial
+ equator from the primary direction along with the hour angle abbreviated
+ by LHA.
+ The hour angle coordinate is the right ascension summed with the local
+ sidereal time.
+\begin_inset CommandInset label
+LatexCommand label
+name "Hour Angle Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Unlike right ascension, hour angle increases with the Earth's rotation.
+ Hour angle is used to measure the time from when an object crosses the
+ meridian.
+ For instance, a star on the observer's celestial meridian is said to have
+ a zero hour angle.
+ About one sidereal hour later, the Earth's rotation will carry the star
+ to the west of the meridian and its hour angle becomes +1h.
+ Right ascension may also be converted into hour angle as an intermediate
+ step to converting to azimuth and altitude by multiplying the spherical
+ coordinates with the rotational matrix shown below in Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:RA to HA"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+R_{(\alpha,\delta)\rightarrow(ha,\delta)}=\left[\begin{array}{ccc}
+\cos(LST) & \sin(LST) & 0\\
+-\sin(LST) & \cos(LST) & 0\\
+0 & 0 & 1
+\end{array}\right]\label{eq:RA to HA}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Azimuth and Altitude (
+\begin_inset Formula $az,alt)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The horizontal coordinate system is a celestial coordinate system that utilizes
+ an observer's local horizon as it's fundamental plane.
+ This coordinate system divides the sky into an upper hemisphere and a lower
+ hemisphere.
+ In the upper hemisphere, objects and stars are visible or within sight
+ while in the lower hemisphere, the our view of the sky is blocked by the
+ Earth.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+great circle
+\begin_inset Quotes erd
+\end_inset
+
+ separating hemispheres is called celestial horizon or rational horizon
+ and the pole of the upper hemisphere is called the zenith.
+ 
+\end_layout
+
+\begin_layout Standard
+Altitude (abbreviated Alt) is sometimes referred to as elevation or the
+ angle between the object and the observer's local horizon.
+ For visible objects in the sky, altitude is an angle between 0º to 90º.
+ Azimuth (abbreviated Az) is the angle of the object about the horizon and
+ is usually measured from the north while increasing towards the east.
+ Because the horizontal coordinate system is fixed to the Earth and not
+ the stars, the altitude and azimuth of an object changes with time as the
+ object appears to 
+\begin_inset Quotes eld
+\end_inset
+
+drift
+\begin_inset Quotes erd
+\end_inset
+
+ across the sky.
+ Furthermore, because the horizontal system is defined by the observer's
+ position or local horizon, different locations on Earth viewing the same
+ object at the same time will have different values of altitude and azimuth.
+\end_layout
+
+\begin_layout Standard
+By multiplying spherical hour angle and declination coordinates by the rotationa
+l matrix shown below in Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:HA, Dec to Az, Alt"
+
+\end_inset
+
+, we can convert (
+\begin_inset Formula $ha,\sigma$
+\end_inset
+
+) coordinates to (
+\begin_inset Formula $az,alt)$
+\end_inset
+
+ coordinates.
+ Since hour angle and declination are 
+\begin_inset Quotes eld
+\end_inset
+
+Earth-based
+\begin_inset Quotes erd
+\end_inset
+
+ coordinates, this conversion will only depend on the observer's terrestrial
+ latitude φ.
+ Additionally, we can also convert directly from right ascension and declination
+ to azimuth and altitude by multiplying our coordinates by both rotational
+ matrices.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+R_{(ha,\delta)\rightarrow(az,alt)}=\left[\begin{array}{ccc}
+-\sin(\phi) & 0 & \cos(\phi)\\
+0 & -1 & 0\\
+\cos(\phi) & 0 & \sin(\phi)
+\end{array}\right]\label{eq:HA, Dec to Az, Alt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Interferometry
+\end_layout
+
+\begin_layout Standard
+Interferometry is the practice of using two or more radio telescopes in
+ a synchronized array to observe astronomical sources and make data measurements.
+ A basic interferometer is composed of the array of radio telescopes along
+ with the electronics used to measure, record, and detect signals.
+ For this lab, my partners and I used a narrow band two-element interferometer
+ located on the roof of Kroeber Hall at UC Berkeley, separated along an
+ approximately East-West baseline.
+ Additionally, the interferometer operates at about 10.67 GHz, the baseline
+ separation between the two dishes is approximately B = 10-m, and the observe
+ radiation is at a wavelength of λ = 2.5 cm.
+\end_layout
+
+\begin_layout Subsubsection
+The Two-Element Interferometer
+\end_layout
+
+\begin_layout Standard
+A two-element interferometer (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "two element inter Figure"
+
+\end_inset
+
+) consists of two telescopes separated by a vector 
+\begin_inset Formula $\vec{b}$
+\end_inset
+
+ known as the baseline.
+ In this system, both antennas simultaneously receive electromagnetic radiation
+ from a specified astronomical source located above in the sky in the direction
+ of the unit vector 
+\begin_inset Formula $\hat{s}$
+\end_inset
+
+.
+ Since astronomical sources are extremely far away, radiation is transmitted
+ to the antennas in the form of 
+\begin_inset Quotes eld
+\end_inset
+
+plane waves.
+\begin_inset Quotes erd
+\end_inset
+
+ A plane wave is a constant-frequency waveform in which the wavefronts are
+ infinite parallel planes of constant peak-to-peak amplitude normal to the
+ phase velocity vector.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ensuremath{\vec{b}}\cdot\hat{s}=\left|\ensuremath{\vec{b}}\right|\cos\theta,\hspace{3em}\tau=\frac{\ensuremath{\vec{b}_{ij}}\cdot\hat{s}}{c}\label{eq:baseline}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/two_element_inter.jpg
+	scale 75
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+When an incoming radio wave approaches the Earth at an angle, the radio
+ wave will arrive at the two separated telescopes at slightly different
+ times.
+ In this picture, the delay in arrival time, also known as the geometric
+ delay, is the distance X divided by the velocity of light.
+ Also, the angular resolution of the interferometer is equal to the wavelength
+ divided by the effective baseline of the telescopes.
+ When the object being observed is directly overhead, the effective baseline
+ is approximately equal to the distance between the two telescopes.
+\begin_inset CommandInset label
+LatexCommand label
+name "two element inter Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As the plane waves from astronomical sources reach the radio dishes, one
+ antenna will end up receiving the signal before the other.
+ The time that passes between the receiving of the signals is calls the
+ geometric delay and is denoted with the variable τ.
+ In order to accurately find the value of τ, we must know the 
+\begin_inset Quotes eld
+\end_inset
+
+extra distance
+\begin_inset Quotes erd
+\end_inset
+
+ that the plane waves have to travel before reaching the second telescope.
+ This distance is approximately equal to the baseline vector dotted with
+ the directional unit vector.
+ Additionally, since the direction of the source is a unit vector, this
+ distance is approximately the projection of the baseline vector onto the
+ unit vector (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:baseline"
+
+\end_inset
+
+) with
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\begin_inset Formula $\theta$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ being the angle between the baseline and direction vectors.
+ If the baseline projection of the interferometer is known, then the geometric
+ delay τ can be calculated by dividing this distance by the velocity of
+ the plane waves (the speed of light, c).
+ When this delay is an exact multiple of the wavelength, then the waves
+ detected by the two telescopes will be in phase and will add together when
+ combined.
+ If they are not, then they will be out of phase and interfere with one
+ another.
+ 
+\end_layout
+
+\begin_layout Standard
+If there is another source in the sky at a different direction from the
+ first, the second source will also cause a geometric delay between the
+ two antennas.
+ However, this would be different from the geometric delay of the first
+ source because it would have different directional unit vectors 
+\begin_inset Formula $\hat{s}$
+\end_inset
+
+.
+ Because each antenna is receiving a signal from each source, what is detected
+ is actually the total signal of the two.
+ In order to separate the signals from each source at each radio dish, we
+ must correlate the total signals with each other.
+\end_layout
+
+\begin_layout Subsubsection
+Correlation
+\end_layout
+
+\begin_layout Standard
+Correlation is very similar to convolution theorem.
+ However, there is a slight difference.
+ When correlating two signals, the Fourier transform of the second function
+ is conjugated before being multiplied and integrated over.
+ Additionally, by correlating a flat-spectrum signal with a time-shifted
+ version of itself, this will yield a measure of the power of the signal
+ at the delay corresponding to the time shift.
+ For a two-element interferometer, the total signal detected by each antenna
+ can be represented as shown in Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:total signal"
+
+\end_inset
+
+, where 
+\begin_inset Formula $e{}_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $e{}_{2}$
+\end_inset
+
+ are the signals given by each source at times t and the difference between
+ t and either 
+\begin_inset Formula $τ_{1}$
+\end_inset
+
+ or 
+\begin_inset Formula $τ_{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+E(t)=e_{1}(t)+e_{2}(t),\hspace{3em}E_{j}(t)=e_{1}(t-\tau_{1})+e_{2}(t-\tau_{2})\label{eq:total signal}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(f\star g)(\tau)=\int{f(t)g^{*}(t-\tau)}dt\label{eq: correlation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By using 
+\begin_inset Formula $E_{i}(t)$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{j}(t)$
+\end_inset
+
+ as 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+ in the correlation equation (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq: correlation"
+
+\end_inset
+
+) respectively, the correlation equation then becomes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(f\star g)(\tau)=\int{e_{1}(t)e_{1}(t-\tau_{1}-\tau)+e_{2}(t)e_{2}(t-\tau_{2}-\tau)}dt\label{eq:correlation application 1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to extract meaningful signal information out of the integral shown
+ above in Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:correlation application 1"
+
+\end_inset
+
+, the two functions must both not average to zero.
+ This is only possible when τ is equal either to 
+\begin_inset Formula $-τ_{1}$
+\end_inset
+
+ or 
+\begin_inset Formula $-τ_{2}$
+\end_inset
+
+.
+ In the case of τ = 
+\begin_inset Formula $-τ_{1}$
+\end_inset
+
+, the correlation integral of the two sources becomes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(f\star g)(\tau)=\int e_{1}(t)e_{1}(t-\tau_{1}-(-\tau_{1}))dt=\int e_{1}(t)e_{1}(t)dt=\,<e_{1}^{2}>
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this expression, the 
+\begin_inset Formula $e{}_{2}$
+\end_inset
+
+ term averages to zero because 
+\begin_inset Formula $\tau_{2}-(-\tau_{1})$
+\end_inset
+
+ does not cancel.
+ The final result is the average power received by the antennas for either
+ the first or second source depending on the geometric delay τ.
+ So for a set of different geometric delays, there is a set of power values
+ that rises above signals that cannot be correlated.
+ The set of power values are essentially noise.
+\end_layout
+
+\begin_layout Subsubsection
+Visibility Equation
+\end_layout
+
+\begin_layout Standard
+A single frequency 
+\begin_inset Formula $\nu$
+\end_inset
+
+ with corresponding wavelength λ has a number of wavelengths according to
+ the relationship to the baseline 
+\begin_inset Formula $\tau_{ij}\nu=\frac{\vec{b}\cdot\hat{s}}{\lambda}$
+\end_inset
+
+.
+ By knowing the number of wavelengths between the two antennas, we can say
+ that for a signal of a particular frequency coming from a source in direction
+ 
+\begin_inset Formula $\hat{s}$
+\end_inset
+
+, the complex phase difference between that signal measured at antenna i
+ and antenna j will be 
+\begin_inset Formula $e^{i\text{θ}}$
+\end_inset
+
+, where θ is the angle covered by the wave as it propagates from i to j.
+ Since θ is 2π times the number of wavelengths, we can the phase difference
+ Δφ (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:phase diff"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\Delta\phi=e^{-2\pi i\tau_{ij}\nu}=e^{-2\pi i\frac{\vec{b}\cdot\hat{s}}{\lambda}}\label{eq:phase diff}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The phase difference Δφ is as shown in the equation above frequency dependent.
+ At particular frequencies, Δφ also varies with position across the sky.
+ The pattern traced by the complex phase difference on the sky is called
+ the “fringe pattern” of the interferometer.
+ To extrapolate from a single baseline in a single direction a picture of
+ how an entire array might respond to the entire sky that falls within the
+ primary beam of the correlated telescopes, we must define coordinates represent
+ing the length of a baseline in units of wavelength (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:baseline in wavelength"
+
+\end_inset
+
+).
+ Additionally, we must split the source direction vector 
+\begin_inset Formula $\hat{s}$
+\end_inset
+
+ into its components.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\vec{b}}{\lambda}\equiv(u,v,w),\hspace{3em}\hat{s}\equiv(l,m,\sqrt{1-l^{2}-m^{2}})\label{eq:baseline in wavelength}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:baseline in wavelength"
+
+\end_inset
+
+, u represents the east-west component of the baseline, v the north-south
+ component, w the vertical (up-down) component, l the east-west direction
+ on the sky, and m the north-south direction.
+ The 
+\begin_inset Formula $\sqrt{1-l^{2}-m^{2}}$
+\end_inset
+
+ component of 
+\begin_inset Formula $\hat{s}$
+\end_inset
+
+ comes from the fact that we restrict our direction to be a unit vector.
+ Using these components, the response of a baseline, or “visibility” V,
+ as a function of the u,v,w separation of the antennas, integrated over
+ all source intensity I on the sky as a function of l and m can be written
+ as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V(u,v)=\int\int{A(l,m)\cdot I(l,m)\cdot e^{-2\pi i(ul+vm+w\sqrt{1-l^{2}-m^{2}})}dl\ dm}\label{eq:Visibility}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:Visibility"
+
+\end_inset
+
+ is the complete form of the “visibility equation” and is also sometimes
+ referred to as the “measurement equation” of an interferometer.
+ Variable A(l,m) is the response of the primary beam of the antennas as
+ a function of it's direction on the sky.
+ In general, A(l,m) and I(l,m) are grouped together because the sky is always
+ perceived through the filter of the primary beam.
+ The product between the two is sometimes referred to as the “perceived
+ intensity
+\begin_inset Quotes erd
+\end_inset
+
+ of the beam.
+\end_layout
+
+\begin_layout Standard
+Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:Visibility"
+
+\end_inset
+
+ can be easier understood if we make a simplifying assumption known as the
+ “flat-sky” approximation.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+flat-sky
+\begin_inset Quotes erd
+\end_inset
+
+ approximation is either that w = 0 or that the primary beam A(l,m) is sufficien
+tly small that 
+\begin_inset Formula $l,m\ll1$
+\end_inset
+
+, making the component
+\begin_inset Formula $\sqrt{1-l^{2}-m^{2}}\approx1$
+\end_inset
+
+.
+ For either approximation, the response of a baseline does not have to account
+ for the fact that the sky is a 
+\begin_inset Quotes eld
+\end_inset
+
+curved surface
+\begin_inset Quotes erd
+\end_inset
+
+ of a sphere.
+ With this assumption, the 
+\begin_inset Formula $e^{-2\pi iw\sqrt{1}}$
+\end_inset
+
+ term is no longer a function of l and m and can therefore be removed from
+ the integral (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:visibility fixed"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V(u,v)=e^{-2\pi iw}\int\int{A(l,m)\cdot I(l,m)\cdot e^{-2\pi i(ul+vm)}dl\ dm}\label{eq:visibility fixed}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This version of the visibility equation shown above states that when the
+ telescopes are phased to a “phase center” through a choice of a corresponding
+ component 
+\begin_inset Formula $e^{\text{−}2\text{π}iw}$
+\end_inset
+
+ with w being the baseline component along the direction toward the phase
+ center in units of wavelength, the visibility V(u,v) is becomes just the
+ Fourier Transform of the perceived sky (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "beam Figure"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/beam.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The true image of the sky is shown on left and the true UV plane is shown
+ on the right.
+\begin_inset CommandInset label
+LatexCommand label
+name "beam Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To better understand the fringe-pattern of a baseline on the sky, we can
+ equivalently think of taking an image of the sky in 
+\begin_inset Formula $l,m$
+\end_inset
+
+ coordinates and then Fourier transform to create a “uv-plane” with coordinates
+ being 
+\begin_inset Quotes eld
+\end_inset
+
+inverse angles.
+\begin_inset Quotes erd
+\end_inset
+
+ Because an inverse angle is the same thing as a wavelength, the uv-plane
+ will have coordinates of u,v.
+ Furthermore, for each pair of antennas, there will be two samples; one
+ at 
+\begin_inset Formula $u,v$
+\end_inset
+
+ and another at 
+\begin_inset Formula $−u,−v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/beam_dirty_1.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The array sampling pattern in the uv-plane is shown on the right and the
+ associated synthesized beam pattern or “dirty beam” on the left.
+\begin_inset CommandInset label
+LatexCommand label
+name "Dirty Beam Figure-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since the sky is real-valued, these two Fourier components are related by
+ a complex conjugate.
+ This means that if we measure V(u,v) at 
+\begin_inset Formula $u,v$
+\end_inset
+
+, we will also have to measure 
+\begin_inset Formula $V^{*}(u,v)$
+\end_inset
+
+ at 
+\begin_inset Formula $−u,−v$
+\end_inset
+
+.
+ The sampling of the uv-plane is done by multiplying the true uv-plane with
+ the sampling pattern computed.
+ This result is what we would get if we took visibilities measured from
+ an interferometer and then placed each visibility V(u,v) at the corresponding
+ 
+\begin_inset Formula $u,v$
+\end_inset
+
+ (along with 
+\begin_inset Formula $−u,−v$
+\end_inset
+
+) coordinates of a matrix.
+ Moreover, if you then take the inverse Fourier Transform of this sampled
+ uv-plane, you get a dirty image (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Dirty Beam Figure-2"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/beam_dirty_2.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The array sampling pattern in the uv-plane is shown on the right while the
+ associated synthesized beam pattern or “dirty beam” is on the left.
+\begin_inset CommandInset label
+LatexCommand label
+name "Dirty Beam Figure-2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because the image shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Dirty Beam Figure-2"
+
+\end_inset
+
+ is fairly degraded from the original, this is usually called a “dirty image”.
+ Information is thus lost while sampling the uv-plane.
+ If we multiply the true uv-plane by our sampling function, this is equivalent
+ to convolving the true sky with the Fourier Transform of our sampling function,
+ also known as the 
+\begin_inset Quotes eld
+\end_inset
+
+dirty beam
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The dirty beam is what is convolved with the true sky to yield our dirty
+ image.
+ Additionally, it is possible to recover something resembling the true sky
+ by deconvolving the dirty image with the dirty beam (see Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Deconvolution figure"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/deconvolution.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This figure shows the result of a “cleaned” dirty image.
+ Note that the point sources are recovered but the extended square in the
+ middle is slightly worse as a result of using a 
+\begin_inset Quotes eld
+\end_inset
+
+point-source model
+\begin_inset Quotes erd
+\end_inset
+
+ in the deconvolution process.
+\begin_inset CommandInset label
+LatexCommand label
+name "Deconvolution figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Deconvolution attempts to compensate for the information that is lost by
+ sampling part of the uv-plane by inserting prior information about the
+ sky.
+ This information can be along the lines of just knowing that the sky is
+ a set of point-sources to knowing that we want the smoothest sky that fits
+ our data to the level of noise.
+ Nevertheless, deconvolution is not a well-posed issue until you decide
+ precisely what prior information you want to use for the sky.
+\end_layout
+
+\begin_layout Section
+Methods and Observations
+\end_layout
+
+\begin_layout Subsection
+Using the Interferometer
+\end_layout
+
+\begin_layout Standard
+In this lab, the interferometer used in this lab has a relatively short
+ baseline and the fringe spacing is larger than the size of all sources
+ except for the Sun and Moon.
+ Because of this, all of these sources looked like “point sources” from
+ which all the radiation appears to come from a single point like a star
+ in optical astronomy.
+ The output of our interferometer is a sinusoidal-like signal called the
+ “fringe”.
+ All information for the data collected using the interferometer is stored
+ in the frequency, amplitude, and phase of the fringe.
+ Additionally, if we initially know the baseline, the fringe properties
+ become indicators of the point-source's declination.
+\end_layout
+
+\begin_layout Standard
+The interferometer we used in this lab is also called a multiplying interferomet
+er.
+ A multiplying interferometer takes the signals from the two telescopes
+ and multiplies them together using a mixer.
+ We repetitively measured and recorded the time average over a suitable
+ interval.
+ Using the cross product between the signals is important because its average
+ value is zero unless there if there is a source.
+ Thus, any detected signal has to come from the sky instead of from the
+ instrument itself.
+ When we observe a source, the fringe amplitude has no zero offset and the
+ amplitude is therefore directly proportional to the source's brightness
+ or flux.
+\end_layout
+
+\begin_layout Subsection
+Measuring Accurate Declinations
+\end_layout
+
+\begin_layout Standard
+Since our interferometer has a baseline of about 10-m, we can recover a
+ fringe spacing of about 
+\begin_inset Formula $\frac{\text{λ}}{B}\sim10\text{′}$
+\end_inset
+
+.
+ From a horizon-to-horizon measurement, we were also able to measure the
+ declination approximately 100 times more accurately.
+ Furthermore, we can also achieve partial angular resolution of the Sun
+ and Moon along with their diameters to a fraction of a percent.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/Angular_diameter.jpg
+	scale 54
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The figure above illustrates the concept of 
+\begin_inset Quotes eld
+\end_inset
+
+angular diameter
+\begin_inset Quotes erd
+\end_inset
+
+ in units of arc minutes, arc seconds, and degrees.
+\begin_inset CommandInset label
+LatexCommand label
+name "arc diam fig"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Object Tracking in Python
+\end_layout
+
+\begin_layout Standard
+To track astronomical sources with the interferometer using the programming
+ language Python, my lab partners and I used the 
+\begin_inset Quotes eld
+\end_inset
+
+PyEphem
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Radiolab
+\begin_inset Quotes erd
+\end_inset
+
+ Python libraries to position our telescope and monitor time.
+ By using UTC, we were able to figure out what sidereal time it is in England
+ at a longitude of 0º in hours, minutes, and seconds.
+ Since right ascension is measured in units of time, this told us what part
+ of the sky is overhead at the prime meridian.
+ From our current longitude at Berkeley (37.8732º N, -122.2573º), we figured
+ out the time offset we had add to get the current local sidereal time.
+ The LST tells us what part of the sky is directly overhead at our location.
+ By subtracting from the RA the LST of our astronomical sources, we were
+ able to get the hour angle as it appears from our location.
+ Finally, from using the latitude, HA, and the declination of our sources,
+ we were able to figure out precisely how and where to point the telescope.
+\end_layout
+
+\begin_layout Subsection
+Point Sources
+\end_layout
+
+\begin_layout Standard
+While choosing point sources, my partners and I had to be careful.
+ Since the fringe frequency is dependent on 
+\begin_inset Formula $\cosδ$
+\end_inset
+
+, this means that we did not measure δ directly, but rather 
+\begin_inset Formula $\cos\text{\ensuremath{δ}}$
+\end_inset
+
+.
+ Southern sources presented a minor problem for horizon-to-horizon tracking
+ because of the presence of the Campanile at UC Berkeley.
+ To compensate for this, we had to delete some of our data.
+ Additionally, our telescope looking for Northern sources may be inaccurate,
+ leading to loss of the signal and noise.
+ Our observation frequency was also in the TV satellite band.
+ Because geostationary TV satellites resides in the southern skies, they
+ can generate strong signals that could enter the telescope's dish sidelines
+ and produce fringes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/sources.png
+	scale 58
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Pictures of Orion Nebula, M17 Nebula, and Virgo A respectively.
+\begin_inset CommandInset label
+LatexCommand label
+name "sources Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The three sources that my partners and I decided to observe were the Orion
+ Nebula, M17 Nebula, and Virgo A.
+ From our observations, my partners and I measured the approximate baseline
+ of our interferometer using fixed declination values for each source.
+ This was done by using the method of 
+\begin_inset Quotes eld
+\end_inset
+
+least-squares fitting
+\begin_inset Quotes erd
+\end_inset
+
+ in Python on the fringe phase to the hour angle on fringe amplitude Equation
+ 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+ shown below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F\left(h_{s}\right)=A\cos\left[(2\pi(\frac{B_{y}}{\lambda}cos\left(\delta\right))sin\left(h_{s}\right)\right]-B\sin\left[(2\pi(\frac{B_{y}}{\lambda}cos\left(\delta\right))sin\left(h_{s}\right)\right]\label{eq:fringe amplitude for pt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/untreated_orion.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Untreated data from the Orion Nebula, collected from March 21, 2014 10:53PM
+ - March 22, 2014 2:20AM.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated Orion Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/untreated_M17.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Untreated data from the M17 Nebula, collected from April 5, 2014 10:07AM
+ - 5:04PM.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated M17 Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/untreated_virgo.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Untreated data from Virgo A, collected from April 3, 2014 3:03AM - 4:20PM.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated Virgo Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The Sun and Moon
+\end_layout
+
+\begin_layout Standard
+The Sun and Moon are special cases cases of astronomical sources for two
+ reasons.
+ First of all, the position of the Sun and Moon change from day to day.
+ For the Moon, even a change of just an hour is extremely significant.
+ Secondly, the Sun and Moon are both extended sources, not point sources.
+ This causes their fringe amplitudes and phases to change with time depending
+ on their brightness distribution and can make the determination of accurate
+ positions somewhat complex.
+ Nevertheless, my partners and I were able to get the Sun and Moon positions
+ directly from the Python library 
+\begin_inset Quotes eld
+\end_inset
+
+PyEphem
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/untreated_sun.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Untreated data from the Sun, collected from April 1, 2014 3:25PM - April
+ 2, 2014 1:02AM.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated Sun Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/untreated_moon.png
+	scale 46
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Untreated data from the Moon, collected from April 4, 2014 6:54PM - April
+ 5, 2014 6:09AM.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated Moon Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since the Earth's Moon it is relatively nearby, we also had to correct for
+ our location on the Earth’s surface.
+ The term "parallax" refers to the semi-angle of inclination between two
+ sight-lines to the star as observed when the Earth is on opposite sides
+ of the Sun in its orbit.
+ The parallax effect for the Moon is far greater than that of the Sun.
+ Unless if this is corrected for, the Moon will probably lie outside the
+ telescope's main beam.
+ Fortunately, PyEphem also automatically takes care of this along with other
+ complex issues like the 
+\begin_inset Quotes eld
+\end_inset
+
+time-of-flight
+\begin_inset Quotes erd
+\end_inset
+
+ of photons.
+ Regardless of these difficulties, the Sun and Moon are still good sources
+ because they are really bright and included them in our observations because
+ they produce huge signals which is ideal for testing our observations and
+ data analysis.
+ Furthermore, the Sun is so bright that we got a huge signal to noise ratio.
+ This allowed us to estimate an accurate declination.
+\end_layout
+
+\begin_layout Standard
+From our observations, my partners and I measured the approximate phase
+ offset 
+\begin_inset Formula $\phi$
+\end_inset
+
+ of our interferometer using 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+the average
+\begin_inset Formula $\frac{B_{y}}{\lambda}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ calculated from the point source data each source.
+ This was done by using the method of 
+\begin_inset Quotes eld
+\end_inset
+
+least-squares fitting
+\begin_inset Quotes erd
+\end_inset
+
+ in Python on the fringe phase to the hour angle on fringe amplitude Equation
+ 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for sun/moon"
+
+\end_inset
+
+shown below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+R\left(h_{s}\right)=\cos\left(\frac{2\pi B_{y}}{\lambda}cos\left(\delta\right)\sin\left(h_{s}\right)+\phi\right)\label{eq:fringe amplitude for sun/moon}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Additional Details
+\end_layout
+
+\begin_layout Standard
+Since the two-element interferometer telescope has different distances for
+ each antenna from the source, it’s convenient to think of the different
+ distances in terms of relative path delay in units of time for the two
+ telescopes.
+ As stated earlier, this is called the geometrical path delay
+\begin_inset Formula $\tau_{g}$
+\end_inset
+
+.
+ However, the signals have to travel through a lot of electronics before
+ they are finally multiplied.
+ Additionally, these two paths are not necessarily of equal length.
+ This makes there an additional relative delay from the difference in cable
+ length 
+\begin_inset Formula $\tau_{c}$
+\end_inset
+
+.
+ The total relative delay is the sum of the two (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:relative delay"
+
+\end_inset
+
+).
+ While 
+\begin_inset Formula $\tau_{g}$
+\end_inset
+
+ is a function of time, 
+\begin_inset Formula $\tau_{c}$
+\end_inset
+
+ is independent of time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\tau_{total}=\tau_{g}(h_{s})+\tau_{c},\hspace{3em}\tau_{g}(h_{s})=\left[\frac{B_{y}}{c}\cos\delta\right]\sin h_{s}\label{eq:relative delay}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The local fringe frequency is the frequency of a certain point on the sky.
+ To see this, we can expand the hour angle term 
+\begin_inset Formula $\sin h_{s}$
+\end_inset
+
+ into a Taylor series centered about the current hour angle of the source
+ 
+\begin_inset Formula $h_{s}$
+\end_inset
+
+ (see Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:expand hour"
+
+\end_inset
+
+).
+ The local fringe frequency is contained in the second term of Equation
+ 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:expand hour"
+
+\end_inset
+
+ because for a small region around 
+\begin_inset Formula $h_{s}$
+\end_inset
+
+ in Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+, 
+\begin_inset Formula $F(h)$
+\end_inset
+
+ varies as 
+\begin_inset Formula $f_{f}\text{∆}h$
+\end_inset
+
+.
+ The local fringe frequency 
+\begin_inset Formula $f_{f}$
+\end_inset
+
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe freq"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sin h=\left.\sin h_{s}+\triangle h\frac{d\sin h}{dh}\right|_{h_{s}}=\sin h_{s}+\triangle h\cos h_{s}\label{eq:expand hour}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+f_{f}=\frac{C}{2\pi}\cos(h_{s})=\left[\frac{B_{y}}{\lambda}\cos\delta\right]\cos h_{s}\label{eq:fringe freq}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe freq"
+
+\end_inset
+
+ represents the local fringe frequency in cycles per radian on the sky.
+ To convert to cycles per hour, we can multiply 
+\begin_inset Formula $\frac{dh_{s}}{dy}=\frac{2\pi}{24}$
+\end_inset
+
+ where the number 24 represents the number of hours in a day.
+ For instance, at the meridian, assuming 
+\begin_inset Formula $B_{y}\approx10m$
+\end_inset
+
+ and 
+\begin_inset Formula $λ=2.5cm$
+\end_inset
+
+, the fringe frequency is approximately 
+\begin_inset Formula $0.029\cos\text{δ}$
+\end_inset
+
+ cycles per second while the period is 
+\begin_inset Formula $\frac{1}{f_{f}}=\frac{35}{\cos\delta}=35s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Least Square Fitting
+\end_layout
+
+\begin_layout Standard
+A least squares method can be used on the filtered data from the point sources
+ and from the Sun and Moon using the fringe amplitude (Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for sun/moon"
+
+\end_inset
+
+).
+ For instance, for the point sources, this is done by minimizing the square
+ of the residuals (
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+) for particular values of 
+\begin_inset Formula $\tau_{c}$
+\end_inset
+
+ and
+\begin_inset Formula $B{}_{y}$
+\end_inset
+
+.
+ Using the following procedure shown below, my lab partners and I were able
+ to fit for both 
+\begin_inset Formula $\tau_{c}$
+\end_inset
+
+ and
+\begin_inset Formula $B{}_{y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+(1) Using python, we inserted Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+ with guessed constant coefficients for the
+\begin_inset Formula $\tau_{c}$
+\end_inset
+
+ dependent factors.
+\end_layout
+
+\begin_layout Standard
+(2) Next, we iterate over a range of possible baseline values 
+\begin_inset Formula $B{}_{y}$
+\end_inset
+
+, and apply a least squares fit to each value.
+ This provided us with a 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ and values of A and B.
+\end_layout
+
+\begin_layout Standard
+(3) By looking at the specific value of 
+\begin_inset Formula $B_{y}$
+\end_inset
+
+ corresponding to the minimum 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ value, this gives us the 
+\begin_inset Quotes eld
+\end_inset
+
+least squares fit
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $B_{y}$
+\end_inset
+
+ , 
+\begin_inset Formula $A$
+\end_inset
+
+, and 
+\begin_inset Formula $B$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Measuring The Diameter Of A Circular Source
+\end_layout
+
+\begin_layout Standard
+In this lab, goal was to measure and compare the diameters of the Sun and
+ Moon.
+ Assuming that the sources are uniformly-bright disks of radius R, this
+ makes the intensity distribution approximately equal to Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:Intensity distribution circular"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+I(\triangle h)=\frac{(R^{2}-\triangle h^{2})^{1/2}}{R}\label{eq:Intensity distribution circular}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Additionally, to obtain the theoretical modulating function 
+\begin_inset Formula $MF{}_{theory}$
+\end_inset
+
+, we can use the following expression:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+MF_{theory}=\frac{1}{R}\intop_{-R}^{R}(R^{2}-\Delta h^{2})^{1/2}\cos(2\pi f_{f}\Delta h)d\Delta h\label{eq:modulation function}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we want to calculate 
+\begin_inset Formula $MF{}_{theory}$
+\end_inset
+
+ analytically, this can be done by substituting 
+\begin_inset Formula $\Delta(R\cos\theta)$
+\end_inset
+
+ for 
+\begin_inset Formula $\Delta h$
+\end_inset
+
+.
+ The result is a Bessel function.
+ To do this, we can split 
+\begin_inset Formula $I(\Delta h)$
+\end_inset
+
+ into 2N+1 tiny slices.
+ Since the total number is odd, this makes the slices symmetric about 
+\begin_inset Formula $\Delta h=0$
+\end_inset
+
+.
+ Each of these slices has width 
+\begin_inset Formula $\delta h=\frac{R}{N}$
+\end_inset
+
+ along with 
+\begin_inset Formula $\Delta h_{n}=n\delta h$
+\end_inset
+
+, where 
+\begin_inset Formula $n$
+\end_inset
+
+ ranges from 
+\begin_inset Formula $-N$
+\end_inset
+
+ to 
+\begin_inset Formula $+N$
+\end_inset
+
+.
+ After being rewritten, the integral becomes the sum shown below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+MF_{theory}\approx\delta h\sum_{n=-N}^{n=+N}\left[1-(\frac{n}{N})^{2}\right]^{1/2}\cos(\frac{2\pi f_{f}Rn}{N})\label{eq:mod funct final}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Data Analysis
+\end_layout
+
+\begin_layout Subsection
+Python Coding to Clean Data
+\end_layout
+
+\begin_layout Standard
+To treat the data my partners and I gathered, I made a Python script to
+ eliminate bad data points for all my data, normalize the plot to the origin,
+ fit an envelope for the Sun and Moon data, plot the power spectrum, and
+ perform a 
+\begin_inset Quotes eld
+\end_inset
+
+Least Square Mean
+\begin_inset Quotes erd
+\end_inset
+
+ curve fit to return the baseline 
+\begin_inset Formula $B_{y}$
+\end_inset
+
+ for point sources, and use polynomial curve fitting for the a parabolic
+ portion of the Sun and Moon to derive a Bessel function, and calculate
+ the angular diameter of the sources.
+ Additionally, my script was also built to make plots for just about any
+ datasets taken from the interferometer given a specified file path.
+\end_layout
+
+\begin_layout Standard
+To normalize datasets to the x-axis, I using a method of data smoothing
+ called 
+\begin_inset Quotes eld
+\end_inset
+
+Boxcar Averaging
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This was done by averaging 100 points above and below each datapoint to
+ create an array of average data.
+ Initially, I used the Boxcar Average to find data points to cut out of
+ the raw data before entering the Boxcar average.
+ Then, by subtracting out the average data plot from the original graph,
+ the data becomes centered about roughly 
+\begin_inset Quotes eld
+\end_inset
+
+y = 0
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This 
+\begin_inset Quotes eld
+\end_inset
+
+cleaning
+\begin_inset Quotes erd
+\end_inset
+
+ my data data calculations and analysis possible.
+\end_layout
+
+\begin_layout Standard
+The next thing I did was fit a curve to the envelope of the Sun and Moon's
+ normalized data.
+ To find the envelop, I cut out from the data points points whose derivative
+ was greater than a number relatively close to 0.
+ This allowed me to only plot points along the peaks in the signal.
+ Then, by taking the absolute value of the truncated data and using another
+ Boxcar average on the data points to smooth the data, I was able to get
+ a nice envelope for the data.
+ For the Moon, however, because the data points had a lot more spikes, I
+ had to use a scaling factor of about 
+\begin_inset Formula $2.7$
+\end_inset
+
+ to scale my envelop to the correct amplitude.
+\end_layout
+
+\begin_layout Standard
+After finding the envelop curve for my Sun and Moon data, I was then able
+ to fit a parabolic polynomial curve to a 
+\begin_inset Quotes eld
+\end_inset
+
+parabola like
+\begin_inset Quotes erd
+\end_inset
+
+ region of my data.
+ By using modulation function shown in Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:mod funct final"
+
+\end_inset
+
+ along with the constants taken from the fitted polynomials, I was then
+ able to derive a Bessel function to approximate the diameter of the Sun
+ and the Moon.
+\end_layout
+
+\begin_layout Subsection
+Sun and Moon Data
+\end_layout
+
+\begin_layout Subsubsection
+The Sun
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/treated_sun.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Treated data with envelope and power spectrum from the Sun.
+ Power leakage occurred at about 25.71mHz.
+\begin_inset CommandInset label
+LatexCommand label
+name "Treated Sun Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/curve_sun.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This figure shows a polynomial curve fit for the Sun data.
+\begin_inset CommandInset label
+LatexCommand label
+name "s_sq Sun Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/bessel_sun.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This figure shows the Bessel function for our Sun data comparing 
+\begin_inset Formula $MF_{theory}$
+\end_inset
+
+ from Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:mod funct final"
+
+\end_inset
+
+ to 
+\begin_inset Formula $R\times f_{f}$
+\end_inset
+
+ in order to calculate the radius.
+ Values used for 
+\begin_inset Formula $R\times f_{f}$
+\end_inset
+
+ are when the function above crosses the x-axis.
+\begin_inset CommandInset label
+LatexCommand label
+name "bessel sun fig"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The Moon
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/treated_moon.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Treated data with envelope and power spectrum from the Moon.
+ Power leakage occurred at about 21.86.71mHz.
+\begin_inset CommandInset label
+LatexCommand label
+name "Treated Moon Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/curve_moon.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This figure shows a polynomial curve fit for the Moon data.
+\begin_inset CommandInset label
+LatexCommand label
+name "poly moon fig"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/bessel_moon.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This figure shows the Bessel function for our Moon data comparing 
+\begin_inset Formula $MF_{theory}$
+\end_inset
+
+ to 
+\begin_inset Formula $R\times f_{f}$
+\end_inset
+
+ in order to calculate the radius.
+ Values used for 
+\begin_inset Formula $R\times f_{f}$
+\end_inset
+
+ are when the function above crosses the x-axis.
+\begin_inset CommandInset label
+LatexCommand label
+name "bessel moon fig"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Measuring the Diameter
+\end_layout
+
+\begin_layout Standard
+When measuring the diameter, because of my specific method of envelope detection
+, it was not necessary to find 
+\begin_inset Formula $\phi$
+\end_inset
+
+ from Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:mod funct final"
+
+\end_inset
+
+.
+ Instead, I ended up performing a nonlinear least square fitting to fit
+ a polynomial to my data and effectively return the Bessel function associated
+ to the data, the fringe frequency, and the approximated radius.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Object Name:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{f}$
+\end_inset
+
+ (Hz)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Diameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Actual Diameter
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sun
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.8865
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.7282
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+167.9125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.9148'
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.6′ – 32.7′
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Moon
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4045
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+58.9277
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.7526'
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.3′ – 34.1′
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Hour angle, declination, fringe frequency, and source radius calculated
+ from Sun and Moon data.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "diameter table"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As shown in the table above, the fringe frequencies and diameters were close
+ to what was to be expected.
+ The Sun, however, was about 2.1684% off from the average low.
+ To approximate the right diameter for the Sun, I used the second 
+\begin_inset Formula $R\times f_{f}$
+\end_inset
+
+ value returned from the Bessel function shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "bessel sun fig"
+
+\end_inset
+
+.
+ For the Moon, I used the first value shown on the Bessel function.
+\end_layout
+
+\begin_layout Subsection
+Point Source Data
+\end_layout
+
+\begin_layout Subsubsection
+The Orion Nebula
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/treated_orion.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Treated data with power spectrum from the Orion Nebula.
+ Power leakage occurred at about 25.96mHz.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated Orion Figure-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/s_sq_orion.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Calculation of 
+\begin_inset Formula $\frac{B_{y}}{\lambda}cos\left(\delta\right)$
+\end_inset
+
+ for the Orion using the 
+\begin_inset Quotes eld
+\end_inset
+
+Least Square Fitting
+\begin_inset Quotes erd
+\end_inset
+
+ method.
+ Least squares done on data ranged from about x = 2300s to 5000s.
+ The dotted-line shows what value made the best approximation to the baseline
+ from the data.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "s_sq Orion Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+M17 Nebula
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/treated_M17.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Treated data with power spectrum from the M17 Nebula.
+ Power leakage occurred at about 8.58mHz.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated M17 Figure-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/s_sq_M17.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Calculation of 
+\begin_inset Formula $\frac{B_{y}}{\lambda}cos\left(\delta\right)$
+\end_inset
+
+ for the M17 using the 
+\begin_inset Quotes eld
+\end_inset
+
+Least Square Fitting
+\begin_inset Quotes erd
+\end_inset
+
+ method.
+ Least squares done on data ranged from about x = 3606s to 5604s.
+ The two dotted-lines acrossing shown in blue appeared to be fairly close
+ to each other.
+ However, since the lowest 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ value shown on the graph still returned a closer approximation to the baseline,
+ it was used for my calculations.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "s_sq M17 Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Virgo A
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/treated_virgo.png
+	scale 56
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Treated data with power spectrum from Virgo A.
+\begin_inset CommandInset label
+LatexCommand label
+name "Untreated Virgo Figure-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/ppkantorski/Documents/Radio_Astronomy/Lab_3/Pictures/s_sq_virgo.png
+	scale 52
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Calculation of 
+\begin_inset Formula $\frac{B_{y}}{\lambda}cos\left(\delta\right)$
+\end_inset
+
+ for Virgo A using the 
+\begin_inset Quotes eld
+\end_inset
+
+Least Square Fitting
+\begin_inset Quotes erd
+\end_inset
+
+ method.
+ Least squares done on data ranged from about x = 17123s to 22130s.
+ Power leakage occurred at about 7.28mHz.
+\begin_inset CommandInset label
+LatexCommand label
+name "s_sq Virgo Figure"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Measuring the Baseline
+\end_layout
+
+\begin_layout Standard
+To measure an accurate value for the baseline, this can be done determined
+ by fitting interferometric data for a point source using Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+.
+ This equation has three unknown quantities; the time delay due to the cable,
+ 
+\begin_inset Formula $\tau_{c}$
+\end_inset
+
+, the baseline 
+\begin_inset Formula $B_{y}$
+\end_inset
+
+, and the declination of the target 
+\begin_inset Formula $δ$
+\end_inset
+
+.
+ To determine the baseline, my partners and I referred to the documented
+ declination of of our point sources seen in Table 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "3C144 table"
+
+\end_inset
+
+.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "Baseline table"
+
+\end_inset
+
+ shown below has the derived coefficients for Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+ and baseline calculated from using least square fitting on our point source
+ data.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Object Name:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r.a.(2000)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dec(2000)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{J_{y}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Orion Nebula
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $05^{h}35^{m}17.3s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $−05^{◦}23′28′′$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sim340$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3C274 (Virgo A)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $12^{h}30^{m}49.423s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $+12^{◦}23′28.04′′$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sim34$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+M17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $18^{h}20^{m}26s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{−}16^{\text{◦}}10.6\text{′}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sim500$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sun
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+varies
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+varies
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Moon
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+varies
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+varies
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+3C144 Data Table for point sources and the Sun and Moon provided on the
+ UC Berkeley astronomy webpage AstroBaki.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "3C144 table"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Object Name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Baseline
+\begin_inset Formula $(B_{y})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Delta B_{y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+% Error
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Orion
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-2.1816e-06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.4396e-06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2176.2744
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.7750
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2250
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.2503 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+M17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.0591e-06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-2.2544e-06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2164.1595
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.0765
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.0765
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.7651
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Virgo A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.7002e-07 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.3418e-07
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2258.3223
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.3395
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.3395
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.3948
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+This table shows the resulting coefficients A and B from Equation 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:fringe amplitude for pt"
+
+\end_inset
+
+ using least square fitting along with the accuracy of fit or square of
+ the residual 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ .
+ From these results, the baseline information and relative error was derived.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Baseline table"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The average baseline was approximately 10.0637-m, a value within 0.6365% of
+ the initial 10-m guess.
+ Errors in data result may have resulted from bad data measurements, possible
+ (but not likely) flawes in coding, external signal noise from the location
+ of the telescopes, and/or improper selection of data for the least square
+ fitting.
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+Interferometry is an extremely useful tool for making more precise measurements
+ than from using single radio dishes.
+ By synchronizing two radio telescopes separated by a baseline, this effectively
+ increases the resolution of data measurements.
+ Since there is a baseline separation when using the interferometer, there
+ is a distinct geometric delay between the two dishes.
+ This geometric delay is what produces the 
+\begin_inset Quotes eld
+\end_inset
+
+fringe patterns
+\begin_inset Quotes erd
+\end_inset
+
+ we observed.
+ Fringe patterns can be used to determine either the baseline of the interferome
+ters or declination of an astronomical point source being tracked.
+\end_layout
+
+\begin_layout Standard
+When measuring the Sun or the Moon with the interferometer, the size of
+ the source is relatively larger than the interferometer we used.
+ Because of this, this gives rise to a modulating function.
+ From the modulating function, the angular radius can then be determined
+ from the function's shape.
+ Although our data could have been better, results were still fairly close
+ to what we expected.
+ Ultimately, this lab has taught how to properly analyze singals and data
+ in Python, use an interferometer to make measurements, and aproximate the
+ baseline from point sources and angular diameter for the Sun and Moon.
+ 
+\end_layout
+
+\begin_layout Section
+Acknowledgements and References
+\end_layout
+
+\begin_layout Enumerate
+Lab Partners: Aaron Tran, Leonardo Cassara, and Ryan Gao.
+\end_layout
+
+\begin_layout Enumerate
+Additional help with analysis, coding, and the report was also proved by
+ Baylee Bordwell and Eduardo Herrera.
+\end_layout
+
+\begin_layout Enumerate
+Undergraduate radio lab.
+ (2014, April 8).
+ Retrieved from
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+https://casper.berkeley.edu/astrobaki/index.php/Undergraduate_Radio_Lab.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Additional pictures were taken from Wikipedia, the free online encyclopedia.
+\end_layout
+
+\end_body
+\end_document
